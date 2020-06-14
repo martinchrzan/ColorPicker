@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Squirrel;
 
@@ -13,7 +10,6 @@ namespace ColorPicker.Helpers
     {
         public AppUpdateManager()
         {
-
         }
 
         public Task<bool> IsNewUpdateAvailable()
@@ -22,7 +18,7 @@ namespace ColorPicker.Helpers
             {
                 try
                 {
-                    using (var mgr = new UpdateManager("C:\\Projects\\MyApp\\Releases"))
+                    using (var mgr = await UpdateManager.GitHubUpdateManager("https://github.com/martinchrzan/ColorPicker"))
                     {
                         var updateInfo = await mgr.CheckForUpdate();
                         if (updateInfo != null && updateInfo.ReleasesToApply != null && updateInfo.ReleasesToApply.Count > 0)
@@ -46,7 +42,7 @@ namespace ColorPicker.Helpers
             {
                 try
                 {
-                    using (var mgr = new UpdateManager("C:\\Projects\\MyApp\\Releases"))
+                    using (var mgr = await UpdateManager.GitHubUpdateManager("https://github.com/martinchrzan/ColorPicker"))
                     {
                         await mgr.UpdateApp();
                         UpdateManager.RestartApp();
