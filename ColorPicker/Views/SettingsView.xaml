@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="ColorPicker.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ColorPicker.Views"
+             mc:Ignorable="d" 
+             xmlns:e="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:behaviors="clr-namespace:ColorPicker.Behaviors"
+             d:DesignHeight="450" d:DesignWidth="800" Background="#303030">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBlock}">
+            <Style.Setters>
+                <Setter Property="Foreground" Value="White"/>
+            </Style.Setters>
+        </Style>
+
+        <Style TargetType="{x:Type CheckBox}">
+            <Style.Setters>
+                <Setter Property="Foreground" Value="White"/>
+            </Style.Setters>
+        </Style>
+    </UserControl.Resources>
+    <e:Interaction.Behaviors>
+        <behaviors:SetShortcutBehavior MonitorKeys="{Binding ShowingKeyboardCaptureOverlay}" ShortCutPreview="{Binding ShortCutPreview, Mode=TwoWay}"/>
+    </e:Interaction.Behaviors>
+    <Grid>
+        <StackPanel Margin="10">
+            <CheckBox Margin="5" IsChecked="{Binding RunOnStartup}" Content="Run on startup"/>
+            <CheckBox Margin="5" IsChecked="{Binding AutomaticUpdates}" Content="Automatic updates"/>
+
+            <WrapPanel>
+                <TextBlock Margin="5" Text="Open color picker shortcut:"/>
+                <TextBlock Margin="5" Text="{Binding ShortCut}"/>
+            </WrapPanel>
+            <Button Margin="5" Content="Change shortcut" Command="{Binding ChangeShortcutCommand}"/>
+
+            <Button Margin="5" Content="Check and install updates" Command="{Binding CheckForUpdatesCommand}"/>
+            <TextBlock Margin="5,10,0,0" FontWeight="SemiBold" Text="{Binding ApplicationVersion, StringFormat={}Version: {0}}" HorizontalAlignment="Right"/>
+            <TextBlock HorizontalAlignment="Right">           
+                    <Hyperlink NavigateUri="http://www.github.com">
+                        <e:Interaction.Behaviors>
+                            <behaviors:HyperlinkBehavior/>
+                        </e:Interaction.Behaviors>
+                        Project website
+                    </Hyperlink>
+            </TextBlock>
+            <TextBlock HorizontalAlignment="Right" Text="Martin Chrzan © 2020" FontWeight="Light"/>      
+        </StackPanel>
+
+        <Border Background="Black" Visibility="{Binding ShowingKeyboardCaptureOverlay, Converter={StaticResource bool2VisibilityConverter}}">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Press keys" FontSize="15" FontWeight="Light" Margin="0,0" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding ShortCutPreview}" FontSize="16" FontWeight="Bold" Margin="0,15" HorizontalAlignment="Center"/>
+                <WrapPanel HorizontalAlignment="Center" Margin="0,30,0,0">
+                    <Button Content="Cancel" Command="{Binding CancelShortcutCommand}" Margin="10,0" HorizontalAlignment="Center" Width="100" />
+                    <Button Content="OK" Command="{Binding ConfirmShortcutCommand}" Margin="10,0" HorizontalAlignment="Center" Width="100"/>
+                </WrapPanel>
+            </StackPanel>
+        </Border>
+
+        <Border Background="Black" Visibility="{Binding CheckingForUpdateInProgress, Converter={StaticResource bool2VisibilityConverter}}">
+            <TextBlock Text="Checking for updates" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
+        </Border>
+
+        <Border BorderThickness="4,0,4,0" BorderBrush="#505050"/>
+    </Grid>
+</UserControl>
