@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel.Composition;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Squirrel;
 
@@ -21,7 +23,8 @@ namespace ColorPicker.Helpers
                     using (var mgr = await UpdateManager.GitHubUpdateManager("https://github.com/martinchrzan/ColorPicker"))
                     {
                         var updateInfo = await mgr.CheckForUpdate();
-                        if (updateInfo != null && updateInfo.ReleasesToApply != null && updateInfo.ReleasesToApply.Count > 0)
+                        if (updateInfo != null && updateInfo.ReleasesToApply != null && updateInfo.ReleasesToApply.Count > 0 
+                        && updateInfo.ReleasesToApply.Last().Version.Version > Assembly.GetExecutingAssembly().GetName().Version)
                         {
                             return true;
                         }
