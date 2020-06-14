@@ -8,3 +8,5 @@ Simple and quick system-wide color picker. Pick colors from any currently runnin
 **To pick color** - *Left mouse click* - copies HEX color into clipboard
 
 **To zoom in** - *Mouse wheel*
+
+![](showcase.gif)
