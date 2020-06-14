@@ -5,6 +5,6 @@ Simple and quick system-wide color picker. Pick colors from any currently runnin
 
 **To open color picker** - (default shortcut) - *Left Ctrl + Break*
 
-**To pick color** - *Left mouse click*
+**To pick color** - *Left mouse click* - copies HEX color into clipboard
 
 **To zoom in** - *Mouse wheel*
