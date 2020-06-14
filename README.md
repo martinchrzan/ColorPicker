@@ -9,4 +9,6 @@ Simple and quick system-wide color picker. Pick colors from any currently runnin
 
 **To zoom in** - *Mouse wheel*
 
+[**Download the latest release here**](https://github.com/martinchrzan/ColorPicker/releases/latest)
+
 ![](showcase.gif)
