@@ -61,9 +61,9 @@ namespace ColorPicker.Behaviors
                 windowLeft -= MonitorRightSideDeadZone - ((int)monitorBounds.Right - windowLeft);
             }
 
-            if ((windowTop + MonitorBottomSideDeadZone) > monitorBounds.Bottom)
+            if ((windowTop + MonitorBottomSideDeadZone / dpi.DpiScaleX) > monitorBounds.Bottom / dpi.DpiScaleX)
             {
-                windowTop -= MonitorBottomSideDeadZone - (((int)monitorBounds.Bottom - windowTop));
+                windowTop -= MonitorBottomSideDeadZone / dpi.DpiScaleX - (((int)monitorBounds.Bottom / dpi.DpiScaleX - windowTop));
             }
 
             AssociatedObject.Left = windowLeft;
