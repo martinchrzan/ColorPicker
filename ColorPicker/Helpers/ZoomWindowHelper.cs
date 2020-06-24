@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace ColorPicker.Helpers
@@ -15,7 +14,7 @@ namespace ColorPicker.Helpers
     {
         private const int ZoomFactor = 2;
         private const int BaseZoomImageSize = 50;
-        private const int MaxZoomLevel = 4;
+        private const int MaxZoomLevel = 3;
         private const int MinZoomLevel = 0;
 
         private int _currentZoomLevel = 0;
@@ -84,13 +83,14 @@ namespace ColorPicker.Helpers
                 var bitmapImage = BitmapToImageSource(bmp);
 
                 _zoomViewModel.ZoomArea = bitmapImage;
+                _zoomViewModel.ZoomFactor = 1;
             }
             else
             {
                 var enlarge = (_currentZoomLevel - _previousZoomLevel) > 0 ? true : false;
                 var currentZoomFactor = enlarge ? ZoomFactor : 1.0 / ZoomFactor;
 
-                _zoomViewModel.ZoomArea = new TransformedBitmap(_zoomViewModel.ZoomArea, new ScaleTransform(currentZoomFactor, currentZoomFactor));
+                _zoomViewModel.ZoomFactor *= currentZoomFactor;
             }
 
             ShowZoomWindow((int)point.X, (int)point.Y);
@@ -161,7 +161,7 @@ namespace ColorPicker.Helpers
 
         private void AppStateHandler_AppClosed(object sender, EventArgs e)
         {
-            HideZoomWindow();
+            CloseZoomWindow();
         }
     }
 }

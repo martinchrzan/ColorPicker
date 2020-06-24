@@ -2,14 +2,15 @@
 <package>
   <metadata>
     <id>ColorPicker</id>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <authors>Martin Chrzan</authors>
     <owners>Martin Chrzan</owners>
     <licenseUrl>https://github.com/martinchrzan/ColorPicker/blob/master/LICENSE</licenseUrl>
     <projectUrl>http://github.com/martinchrzan/ColorPicker</projectUrl>
     <!--<iconUrl></iconUrl>-->
     <releaseNotes>
-      Fixed color window going out of screen when hitting its bottom on monitors that use higher than 100% of scaling.
+      Fixed zoom window preview - now it shows exact pixels, no smoothing
+Fixed issue with opening zoom second time
     </releaseNotes>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Color Picker</description>

@@ -9,6 +9,7 @@ namespace ColorPicker.ViewModels
     public class ZoomViewModel : ViewModelBase, IZoomViewModel
     {
         private BitmapSource _zoomArea;
+        private double _zoomFactor = 1;
 
         [ImportingConstructor]
         public ZoomViewModel()
@@ -24,6 +25,19 @@ namespace ColorPicker.ViewModels
             set
             {
                 _zoomArea = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public double ZoomFactor
+        {
+            get
+            {
+                return _zoomFactor;
+            }
+            set
+            {
+                _zoomFactor = value;
                 OnPropertyChanged();
             }
         }

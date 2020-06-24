@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:ColorPicker.Resources">
+                    xmlns:local="clr-namespace:ColorPicker.Resources"
+                    xmlns:converters="clr-namespace:ColorPicker.Converters">
     <!--CONVERTERS-->
     <BooleanToVisibilityConverter x:Key="bool2VisibilityConverter" />
-    
+    <converters:ZoomFactorToSizeConverter x:Key="zoomFactorToSizeConverter"/>
 </ResourceDictionary>

@@ -11,5 +11,7 @@ namespace ColorPicker.ViewModelContracts
     public interface IZoomViewModel
     {
         BitmapSource ZoomArea { get; set; }
+
+        double ZoomFactor { get; set; }
     }
 }

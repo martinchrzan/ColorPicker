@@ -98,6 +98,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\ViewModelBase.cs" />
+    <Compile Include="Converters\ZoomFactorToSizeConverter.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\RegistryHelper.cs" />
     <Compile Include="Helpers\SettingsWindowHelper.cs" />
