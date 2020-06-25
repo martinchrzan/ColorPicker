@@ -41,7 +41,6 @@ namespace ColorPicker.ViewModels
                 if (await appUpdateManager.IsNewUpdateAvailable())
                 {
                     await appUpdateManager.Update();
-                    
                 }
 
                 CheckingForUpdateInProgress = false;

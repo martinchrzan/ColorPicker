@@ -27,6 +27,9 @@ namespace ColorPicker.Helpers
         private double _lastLeft;
         private double _lastTop;
 
+        private double _previousScaledX;
+        private double _previousScaledY;
+
         [ImportingConstructor]
         public ZoomWindowHelper(IZoomViewModel zoomViewModel, AppStateHandler appStateHandler) 
         {
@@ -70,13 +73,14 @@ namespace ColorPicker.Helpers
                 HideZoomWindow();
                 return;
             }
+
             // we just started zooming, copy screen area
             if(_previousZoomLevel == 0 )
             {
                 var x = (int)point.X - BaseZoomImageSize / 2;
                 var y = (int)point.Y - BaseZoomImageSize / 2;
                 var rect = new Rectangle(x, y, BaseZoomImageSize, BaseZoomImageSize);
-                var bmp = new Bitmap(rect.Width, rect.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                var bmp = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppArgb);
                 var g = Graphics.FromImage(bmp);
                 g.CopyFromScreen(rect.Left, rect.Top, 0, 0, bmp.Size, CopyPixelOperation.SourceCopy);
 
@@ -121,7 +125,7 @@ namespace ColorPicker.Helpers
 
         private void ShowZoomWindow(int x, int y)
         {
-            if(_zoomWindow == null)
+            if (_zoomWindow == null)
             {
                 _zoomWindow = new ZoomWindow();
                 _zoomWindow.Content = _zoomViewModel;
@@ -129,16 +133,32 @@ namespace ColorPicker.Helpers
                 _zoomWindow.IsVisibleChanged += ZoomWindow_IsVisibleChanged;
             }
 
-            if (!_zoomWindow.IsVisible)
+            // we just started zooming, remember where we opened zoom window
+            if (_currentZoomLevel == 1 && _previousZoomLevel == 0)
             {
                 var dpi = MonitorResolutionHelper.GetCurrentMonitorDpi();
-                var scaledX = x / dpi.DpiScaleX;
-                var scaledY = y / dpi.DpiScaleY;
-                _lastLeft = _zoomWindow.Left = scaledX - ((BaseZoomImageSize * Math.Pow(ZoomFactor, _currentZoomLevel - 1)) / 2);
-                _lastTop = _zoomWindow.Top = scaledY - ((BaseZoomImageSize * Math.Pow(ZoomFactor, _currentZoomLevel - 1)) / 2);
+                _previousScaledX = x / dpi.DpiScaleX;
+                _previousScaledY = y / dpi.DpiScaleY;
+            }
+
+            var justShown = false;
+            if (!_zoomWindow.IsVisible)
+            {
                 _zoomWindow.Show();
-                
+                justShown = true;
+                // make sure color picker window is on top of just opened zoom window
                 _appStateHandler.SetTopMost();
+            }
+
+            _lastLeft = _zoomWindow.Left = Math.Floor(_previousScaledX - ((BaseZoomImageSize * Math.Pow(ZoomFactor, _currentZoomLevel - 1)) / 2));
+            _lastTop = _zoomWindow.Top = Math.Floor(_previousScaledY - ((BaseZoomImageSize * Math.Pow(ZoomFactor, _currentZoomLevel - 1)) / 2));
+
+            // dirty hack - sometimes when we just show a window on a second monitor with different DPI, 
+            // window position is not set correctly on a first time, we need to "ping" it again to make it appear on the proper location
+            if (justShown)
+            {
+                _zoomWindow.Left = _lastLeft + 1;
+                _zoomWindow.Top = _lastTop + 1;
             }
         }
 

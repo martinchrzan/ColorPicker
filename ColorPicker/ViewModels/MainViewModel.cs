@@ -38,7 +38,10 @@ namespace ColorPicker.ViewModels
             mouseInfoProvider.OnMouseWheel += MouseInfoProvider_OnMouseWheel;
 
             keyboardMonitor.Start();
+            
+            #if !DEBUG
             CheckForUpdates(appUpdateManager, userSettings);
+            #endif
         }
 
         private static void CheckForUpdates(AppUpdateManager appUpdateManager, IUserSettings userSettings)
