@@ -9,6 +9,9 @@ using System.Windows.Media.Imaging;
 
 namespace ColorPicker.Helpers
 {
+    public static class Extensions {
+    }
+
     [Export(typeof(ZoomWindowHelper))]
     public class ZoomWindowHelper
     {
@@ -141,17 +144,21 @@ namespace ColorPicker.Helpers
                 _previousScaledY = y / dpi.DpiScaleY;
             }
 
+            _lastLeft = Math.Floor(_previousScaledX - ((BaseZoomImageSize * Math.Pow(ZoomFactor, _currentZoomLevel - 1)) / 2));
+            _lastTop = Math.Floor(_previousScaledY - ((BaseZoomImageSize * Math.Pow(ZoomFactor, _currentZoomLevel - 1)) / 2));
+
             var justShown = false;
             if (!_zoomWindow.IsVisible)
             {
+                _zoomWindow.Left = _lastLeft;
+                _zoomWindow.Top = _lastTop;
+                _zoomViewModel.Height = BaseZoomImageSize;
+                _zoomViewModel.Width = BaseZoomImageSize;
                 _zoomWindow.Show();
                 justShown = true;
                 // make sure color picker window is on top of just opened zoom window
                 _appStateHandler.SetTopMost();
             }
-
-            _lastLeft = _zoomWindow.Left = Math.Floor(_previousScaledX - ((BaseZoomImageSize * Math.Pow(ZoomFactor, _currentZoomLevel - 1)) / 2));
-            _lastTop = _zoomWindow.Top = Math.Floor(_previousScaledY - ((BaseZoomImageSize * Math.Pow(ZoomFactor, _currentZoomLevel - 1)) / 2));
 
             // dirty hack - sometimes when we just show a window on a second monitor with different DPI, 
             // window position is not set correctly on a first time, we need to "ping" it again to make it appear on the proper location
@@ -160,6 +167,11 @@ namespace ColorPicker.Helpers
                 _zoomWindow.Left = _lastLeft + 1;
                 _zoomWindow.Top = _lastTop + 1;
             }
+
+            _zoomWindow.DesiredLeft = _lastLeft;
+            _zoomWindow.DesiredTop = _lastTop;
+            _zoomViewModel.DesiredHeight = BaseZoomImageSize * _zoomViewModel.ZoomFactor;
+            _zoomViewModel.DesiredWidth = BaseZoomImageSize * _zoomViewModel.ZoomFactor; 
         }
 
         private void ZoomWindow_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

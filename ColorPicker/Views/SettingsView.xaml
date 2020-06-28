@@ -28,7 +28,7 @@
         <StackPanel Margin="10">
             <CheckBox Margin="5" IsChecked="{Binding RunOnStartup}" Content="Run on startup"/>
             <CheckBox Margin="5" IsChecked="{Binding AutomaticUpdates}" Content="Automatic updates"/>
-
+            <CheckBox Margin="5" IsChecked="{Binding ChangeCursorWhenPickingColor}" Content="Change cursor when picking color"/>
             <WrapPanel>
                 <TextBlock Margin="5" Text="Open color picker shortcut:"/>
                 <TextBlock Margin="5" Text="{Binding ShortCut}"/>

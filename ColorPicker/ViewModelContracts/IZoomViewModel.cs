@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+﻿using System.Windows.Media.Imaging;
 
 namespace ColorPicker.ViewModelContracts
 {
@@ -13,5 +7,13 @@ namespace ColorPicker.ViewModelContracts
         BitmapSource ZoomArea { get; set; }
 
         double ZoomFactor { get; set; }
+
+        double DesiredWidth { get; set; }
+
+        double DesiredHeight { get; set; }
+
+        double Width { get; set; }
+
+        double Height { get; set; }
     }
 }

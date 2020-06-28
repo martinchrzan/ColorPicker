@@ -10,6 +10,8 @@ namespace ColorPicker.ViewModelContracts
 
         bool ShowingKeyboardCaptureOverlay { get; set; }
 
+        bool ChangeCursorWhenPickingColor { get; set; }
+
         string ShortCut { get; }
 
         string ShortCutPreview { get; set; }

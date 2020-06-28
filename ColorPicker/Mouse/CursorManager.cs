@@ -30,8 +30,14 @@ namespace ColorPicker.Mouse
 
         public static void RestoreOriginalCursors()
         {
-            ChangeCursor(_originalArrowCursorPath, ArrowRegistryName);
-            ChangeCursor(_originalIBeamCursorPath, IBeamRegistryName);
+            if (!string.IsNullOrEmpty(_originalArrowCursorPath))
+            {
+                ChangeCursor(_originalArrowCursorPath, ArrowRegistryName);
+            }
+            if (!string.IsNullOrEmpty(_originalIBeamCursorPath))
+            {
+                ChangeCursor(_originalIBeamCursorPath, IBeamRegistryName);
+            }
         }
 
         private static void ChangeCursor(string curFile, string cursorRegistryName)

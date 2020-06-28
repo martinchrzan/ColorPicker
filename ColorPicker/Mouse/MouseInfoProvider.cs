@@ -1,4 +1,5 @@
 ﻿using ColorPicker.Helpers;
+using ColorPicker.Settings;
 using System;
 using System.ComponentModel.Composition;
 using System.Drawing;
@@ -16,11 +17,12 @@ namespace ColorPicker.Mouse
         private const int MousePullInfoIntervalInMs = 10;
         private readonly DispatcherTimer _timer = new DispatcherTimer();
         private readonly MouseHook _mouseHook;
+        private readonly IUserSettings _userSettings;
         private System.Windows.Point _previousMousePosition = new System.Windows.Point(-1, 1);
         private Color _previousColor = Color.Transparent;
         
         [ImportingConstructor]
-        public MouseInfoProvider(AppStateHandler appStateMonitor)
+        public MouseInfoProvider(AppStateHandler appStateMonitor, IUserSettings userSettings)
         {
             _timer.Interval = TimeSpan.FromMilliseconds(MousePullInfoIntervalInMs);
             _timer.Tick += Timer_Tick;
@@ -29,6 +31,7 @@ namespace ColorPicker.Mouse
             appStateMonitor.AppClosed += AppStateMonitor_AppClosed;
             appStateMonitor.AppHidden += AppStateMonitor_AppClosed;
             _mouseHook = new MouseHook();
+            _userSettings = userSettings;
         }
 
         public event EventHandler<Color> MouseColorChanged;
@@ -91,7 +94,11 @@ namespace ColorPicker.Mouse
             _previousMousePosition = new System.Windows.Point(-1, 1);
             _mouseHook.OnMouseDown -= MouseHook_OnMouseDown;
             _mouseHook.OnMouseWheel -= MouseHook_OnMouseWheel;
-            CursorManager.RestoreOriginalCursors();
+
+            if (_userSettings.ChangeCursor.Value)
+            {
+                CursorManager.RestoreOriginalCursors();
+            }
         }
 
         private void AppStateMonitor_AppShown(object sender, EventArgs e)
@@ -105,7 +112,10 @@ namespace ColorPicker.Mouse
             _mouseHook.OnMouseDown += MouseHook_OnMouseDown;
             _mouseHook.OnMouseWheel += MouseHook_OnMouseWheel;
 
-            CursorManager.SetColorPickerCursor();
+            if (_userSettings.ChangeCursor.Value)
+            {
+                CursorManager.SetColorPickerCursor();
+            }
         }
 
         private void MouseHook_OnMouseWheel(object sender, MouseWheelEventArgs e)

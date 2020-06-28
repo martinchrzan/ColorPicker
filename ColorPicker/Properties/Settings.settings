@@ -14,5 +14,8 @@
     <Setting Name="ActivationShortcut" Type="System.String" Scope="User">
       <Value Profile="(Default)">LeftCtrl + Cancel</Value>
     </Setting>
+    <Setting Name="ChangeCursorWhenPickingColor" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -93,12 +93,13 @@
     <Compile Include="Behaviors\ChangeWindowPositionBehavior.cs" />
     <Compile Include="Behaviors\CloseZoomWindowBehavior.cs" />
     <Compile Include="Behaviors\HyperlinkBehavior.cs" />
+    <Compile Include="Behaviors\MoveWindowBehavior.cs" />
     <Compile Include="Behaviors\NotifyIconBehavior.cs" />
+    <Compile Include="Behaviors\ResizeBehavior.cs" />
     <Compile Include="Behaviors\SetShortcutBehavior.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\ViewModelBase.cs" />
-    <Compile Include="Converters\ZoomFactorToSizeConverter.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\RegistryHelper.cs" />
     <Compile Include="Helpers\SettingsWindowHelper.cs" />

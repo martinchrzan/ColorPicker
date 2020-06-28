@@ -131,6 +131,19 @@ namespace ColorPicker.ViewModels
             }
         }
 
+        public bool ChangeCursorWhenPickingColor
+        {
+            get
+            {
+                return _userSettings.ChangeCursor.Value;
+            }
+            set
+            {
+                _userSettings.ChangeCursor.Value = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string ApplicationVersion { get { return Assembly.GetExecutingAssembly().GetName().Version.ToString(); } }
 
         public ICommand ChangeShortcutCommand { get; }

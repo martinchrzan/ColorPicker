@@ -14,6 +14,7 @@ namespace ColorPicker.Settings
             RunOnStartup = new SettingItem<bool>(settings.RunOnStartup, (currentValue) => { settings.RunOnStartup = currentValue; SaveSettings(); });
             AutomaticUpdates = new SettingItem<bool>(settings.AutomaticUpdates, (currentValue) => { settings.AutomaticUpdates = currentValue; SaveSettings(); });
             ActivationShortcut = new SettingItem<string>(settings.ActivationShortcut, (currentValue) => { settings.ActivationShortcut = currentValue; SaveSettings(); });
+            ChangeCursor = new SettingItem<bool>(settings.ChangeCursorWhenPickingColor, (currentValue) => { settings.ChangeCursorWhenPickingColor = currentValue; SaveSettings(); });
         }
 
         public SettingItem<bool> RunOnStartup { get; }
@@ -21,6 +22,8 @@ namespace ColorPicker.Settings
         public SettingItem<bool> AutomaticUpdates { get; }
 
         public SettingItem<string> ActivationShortcut { get; }
+
+        public SettingItem<bool> ChangeCursor { get; }
 
         private void SaveSettings()
         {
