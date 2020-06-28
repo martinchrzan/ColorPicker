@@ -4,5 +4,4 @@
                     xmlns:converters="clr-namespace:ColorPicker.Converters">
     <!--CONVERTERS-->
     <BooleanToVisibilityConverter x:Key="bool2VisibilityConverter" />
-    <converters:ZoomFactorToSizeConverter x:Key="zoomFactorToSizeConverter"/>
 </ResourceDictionary>
