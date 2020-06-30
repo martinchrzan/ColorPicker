@@ -30,14 +30,8 @@ namespace ColorPicker.Mouse
 
         public static void RestoreOriginalCursors()
         {
-            if (!string.IsNullOrEmpty(_originalArrowCursorPath))
-            {
-                ChangeCursor(_originalArrowCursorPath, ArrowRegistryName);
-            }
-            if (!string.IsNullOrEmpty(_originalIBeamCursorPath))
-            {
-                ChangeCursor(_originalIBeamCursorPath, IBeamRegistryName);
-            }
+            ChangeCursor(_originalArrowCursorPath, ArrowRegistryName);
+            ChangeCursor(_originalIBeamCursorPath, IBeamRegistryName);
         }
 
         private static void ChangeCursor(string curFile, string cursorRegistryName)
@@ -45,8 +39,7 @@ namespace ColorPicker.Mouse
             try
             {
                 Registry.SetValue(CursorsRegistryPath, cursorRegistryName, curFile);
-                uint a = 0;
-                Win32Apis.SystemParametersInfo(SPI_SETCURSORS, 0, ref a, SPIF_UPDATEINIFILE | SPIF_SENDCHANGE);
+                Win32Apis.SystemParametersInfo(SPI_SETCURSORS, 0, new IntPtr(0), SPIF_SENDCHANGE);
             }
             catch (Exception ex)
             {
@@ -75,7 +68,6 @@ namespace ColorPicker.Mouse
         }
 
         const int SPI_SETCURSORS = 0x0057;
-        const int SPIF_UPDATEINIFILE = 0x01;
         const int SPIF_SENDCHANGE = 0x02;
     }
 }

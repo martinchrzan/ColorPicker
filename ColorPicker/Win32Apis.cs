@@ -54,7 +54,7 @@ namespace ColorPicker
         internal static extern IntPtr CallNextHookEx(IntPtr idHook, int nCode, IntPtr wParam, IntPtr lParam);
 
         [DllImport("user32.dll", EntryPoint = "SystemParametersInfo")]
-        internal static extern bool SystemParametersInfo(uint uiAction, uint uiParam, ref uint pvParam, uint fWinIni);
+        internal static extern bool SystemParametersInfo(int uiAction, int uiParam, IntPtr pvParam, int fWinIni);
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct POINT
@@ -103,7 +103,7 @@ namespace ColorPicker
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct LowLevelKeyboardInputEvent
+        internal struct LowLevelKeyboardInputEvent
         {
             /// <summary>
             /// A virtual-key code. The code must be a value in the range 1 to 254.

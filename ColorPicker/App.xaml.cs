@@ -14,7 +14,6 @@ namespace ColorPicker
     {
         private Mutex _instanceMutex = null;
 
-
         [STAThread]
         public static void Main()
         {

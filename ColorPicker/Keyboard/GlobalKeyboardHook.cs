@@ -6,7 +6,7 @@ using static ColorPicker.Win32Apis;
 
 namespace ColorPicker.Keyboard
 {
-    public class GlobalKeyboardHook : IDisposable
+    internal class GlobalKeyboardHook : IDisposable
     {
         private IntPtr _windowsHookHandle;
         private IntPtr _user32LibraryHandle;
@@ -33,7 +33,7 @@ namespace ColorPicker.Keyboard
             }
         }
 
-        public event EventHandler<GlobalKeyboardHookEventArgs> KeyboardPressed;
+        internal event EventHandler<GlobalKeyboardHookEventArgs> KeyboardPressed;
 
         protected virtual void Dispose(bool disposing)
         {

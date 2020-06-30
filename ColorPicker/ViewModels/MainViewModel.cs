@@ -6,6 +6,7 @@ using ColorPicker.Settings;
 using ColorPicker.ViewModelContracts;
 using System;
 using System.ComponentModel.Composition;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -139,7 +140,7 @@ namespace ColorPicker.ViewModels
 
         private static string ColorToHex(System.Drawing.Color c)
         {
-            return "#" + c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
+            return "#" + c.R.ToString("X2", CultureInfo.InvariantCulture) + c.G.ToString("X2") + c.B.ToString("X2");
         }
 
         private static string ColorToRGB(System.Drawing.Color c)

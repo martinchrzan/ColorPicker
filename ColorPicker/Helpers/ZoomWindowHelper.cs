@@ -9,9 +9,6 @@ using System.Windows.Media.Imaging;
 
 namespace ColorPicker.Helpers
 {
-    public static class Extensions {
-    }
-
     [Export(typeof(ZoomWindowHelper))]
     public class ZoomWindowHelper
     {

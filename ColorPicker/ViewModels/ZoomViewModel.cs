@@ -1,7 +1,6 @@
 ﻿using ColorPicker.Common;
 using ColorPicker.ViewModelContracts;
 using System.ComponentModel.Composition;
-using System.Runtime.InteropServices.ComTypes;
 using System.Windows.Media.Imaging;
 
 namespace ColorPicker.ViewModels

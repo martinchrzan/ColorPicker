@@ -3,12 +3,12 @@ using static ColorPicker.Win32Apis;
 
 namespace ColorPicker.Keyboard
 {
-    public class GlobalKeyboardHookEventArgs : HandledEventArgs
+    internal class GlobalKeyboardHookEventArgs : HandledEventArgs
     {
-        public GlobalKeyboardHook.KeyboardState KeyboardState { get; private set; }
-        public LowLevelKeyboardInputEvent KeyboardData { get; private set; }
+        internal GlobalKeyboardHook.KeyboardState KeyboardState { get; private set; }
+        internal LowLevelKeyboardInputEvent KeyboardData { get; private set; }
 
-        public GlobalKeyboardHookEventArgs(
+        internal GlobalKeyboardHookEventArgs(
             LowLevelKeyboardInputEvent keyboardData,
             GlobalKeyboardHook.KeyboardState keyboardState)
         {
