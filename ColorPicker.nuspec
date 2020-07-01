@@ -2,15 +2,14 @@
 <package>
   <metadata>
     <id>ColorPicker</id>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <authors>Martin Chrzan</authors>
     <owners>Martin Chrzan</owners>
     <licenseUrl>https://github.com/martinchrzan/ColorPicker/blob/master/LICENSE</licenseUrl>
     <projectUrl>http://github.com/martinchrzan/ColorPicker</projectUrl>
     <!--<iconUrl></iconUrl>-->
     <releaseNotes>
-      Added the option to turn off changing cursor when picking a color
-      Zoom window is now centered and animated when zooming
+      Fixed cursor not switching back to the original one after picking a color
     </releaseNotes>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Color Picker</description>

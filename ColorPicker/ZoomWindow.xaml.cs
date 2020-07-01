@@ -12,7 +12,6 @@ namespace ColorPicker
         private double _top;
         public ZoomWindow()
         {
-
             InitializeComponent();
             DataContext = this;
         }
