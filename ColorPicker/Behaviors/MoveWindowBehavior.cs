@@ -15,7 +15,7 @@ namespace ColorPicker.Behaviors
             var sender = ((MoveWindowBehavior)d).AssociatedObject;
             var move = new DoubleAnimation(sender.Left, (double)e.NewValue, new Duration(TimeSpan.FromMilliseconds(150)), FillBehavior.Stop);
             move.EasingFunction = new QuadraticEase() { EasingMode = EasingMode.EaseOut };
-            sender.BeginAnimation(Window.LeftProperty, move, HandoffBehavior.SnapshotAndReplace);
+            sender.BeginAnimation(Window.LeftProperty, move, HandoffBehavior.Compose);
         }
 
         public static DependencyProperty TopProperty = DependencyProperty.Register("Top", typeof(double), typeof(MoveWindowBehavior), new PropertyMetadata(new PropertyChangedCallback(TopPropertyChanged)));
@@ -26,7 +26,7 @@ namespace ColorPicker.Behaviors
             var sender = ((MoveWindowBehavior)d).AssociatedObject;
             var move = new DoubleAnimation(sender.Top, (double)e.NewValue, new Duration(TimeSpan.FromMilliseconds(150)), FillBehavior.Stop);
             move.EasingFunction = new QuadraticEase() { EasingMode = EasingMode.EaseOut };
-            sender.BeginAnimation(Window.TopProperty, move, HandoffBehavior.SnapshotAndReplace);
+            sender.BeginAnimation(Window.TopProperty, move, HandoffBehavior.Compose);
         }
 
         public double Left

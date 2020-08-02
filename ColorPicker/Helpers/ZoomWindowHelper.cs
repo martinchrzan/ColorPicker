@@ -22,6 +22,7 @@ namespace ColorPicker.Helpers
         
         private readonly IZoomViewModel _zoomViewModel;
         private readonly AppStateHandler _appStateHandler;
+        private readonly IThrottledActionInvoker _throttledActionInvoker;
         private ZoomWindow _zoomWindow;
 
         private double _lastLeft;
@@ -31,10 +32,11 @@ namespace ColorPicker.Helpers
         private double _previousScaledY;
 
         [ImportingConstructor]
-        public ZoomWindowHelper(IZoomViewModel zoomViewModel, AppStateHandler appStateHandler) 
+        public ZoomWindowHelper(IZoomViewModel zoomViewModel, AppStateHandler appStateHandler, IThrottledActionInvoker throttledActionInvoker) 
         {
             _zoomViewModel = zoomViewModel;
             _appStateHandler = appStateHandler;
+            _throttledActionInvoker = throttledActionInvoker;
             _appStateHandler.AppClosed += AppStateHandler_AppClosed;
             _appStateHandler.AppHidden += AppStateHandler_AppClosed;
         }
@@ -165,10 +167,12 @@ namespace ColorPicker.Helpers
                 _zoomWindow.Top = _lastTop + 1;
             }
 
-            _zoomWindow.DesiredLeft = _lastLeft;
-            _zoomWindow.DesiredTop = _lastTop;
-            _zoomViewModel.DesiredHeight = BaseZoomImageSize * _zoomViewModel.ZoomFactor;
-            _zoomViewModel.DesiredWidth = BaseZoomImageSize * _zoomViewModel.ZoomFactor; 
+            _throttledActionInvoker.ScheduleAction(() => {
+                _zoomWindow.DesiredLeft = _lastLeft;
+                _zoomWindow.DesiredTop = _lastTop;
+                _zoomViewModel.DesiredHeight = BaseZoomImageSize * _zoomViewModel.ZoomFactor;
+                _zoomViewModel.DesiredWidth = BaseZoomImageSize * _zoomViewModel.ZoomFactor;
+            }, 50);
         }
 
         private void ZoomWindow_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
