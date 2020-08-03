@@ -90,15 +90,7 @@ namespace ColorPicker.Mouse
 
         private void AppStateMonitor_AppClosed(object sender, EventArgs e)
         {
-            _timer.Stop();
-            _previousMousePosition = new System.Windows.Point(-1, 1);
-            _mouseHook.OnMouseDown -= MouseHook_OnMouseDown;
-            _mouseHook.OnMouseWheel -= MouseHook_OnMouseWheel;
-
-            if (_userSettings.ChangeCursor.Value)
-            {
-                CursorManager.RestoreOriginalCursors();
-            }
+            DisposeMouseHook();
         }
 
         private void AppStateMonitor_AppShown(object sender, EventArgs e)
@@ -131,7 +123,25 @@ namespace ColorPicker.Mouse
 
         private void MouseHook_OnMouseDown(object sender, Point p)
         {
+            DisposeMouseHook();
             OnMouseDown?.Invoke(this, p);
+        }
+
+        private void DisposeMouseHook()
+        {
+            if (_timer.IsEnabled)
+            {
+                _timer.Stop();
+            }
+            
+            _previousMousePosition = new System.Windows.Point(-1, 1);
+            _mouseHook.OnMouseDown -= MouseHook_OnMouseDown;
+            _mouseHook.OnMouseWheel -= MouseHook_OnMouseWheel;
+
+            if (_userSettings.ChangeCursor.Value)
+            {
+                CursorManager.RestoreOriginalCursors();
+            }
         }
     }
 }
