@@ -38,7 +38,7 @@
             <Button Margin="5" Content="Check and install updates" Command="{Binding CheckForUpdatesCommand}"/>
             <TextBlock Margin="5,10,0,0" FontWeight="SemiBold" Text="{Binding ApplicationVersion, StringFormat={}Version: {0}}" HorizontalAlignment="Right"/>
             <TextBlock HorizontalAlignment="Right">           
-                    <Hyperlink NavigateUri="http://www.github.com">
+                    <Hyperlink NavigateUri="http://www.github.com/martinchrzan/ColorPicker">
                         <e:Interaction.Behaviors>
                             <behaviors:HyperlinkBehavior/>
                         </e:Interaction.Behaviors>

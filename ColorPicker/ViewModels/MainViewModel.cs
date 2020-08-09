@@ -115,7 +115,7 @@ namespace ColorPicker.ViewModels
                 {
                     try
                     {
-                        Clipboard.SetText(HexColor);
+                        Clipboard.SetText(HexColor.ToLowerInvariant());
                         break;
                     }
                     catch (COMException ex)
