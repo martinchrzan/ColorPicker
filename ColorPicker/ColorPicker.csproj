@@ -92,6 +92,7 @@
     <Compile Include="Behaviors\AppearAnimationBehavior.cs" />
     <Compile Include="Behaviors\ChangeWindowPositionBehavior.cs" />
     <Compile Include="Behaviors\CloseZoomWindowBehavior.cs" />
+    <Compile Include="Behaviors\GridEffectBehavior.cs" />
     <Compile Include="Behaviors\HyperlinkBehavior.cs" />
     <Compile Include="Behaviors\MoveWindowBehavior.cs" />
     <Compile Include="Behaviors\NotifyIconBehavior.cs" />
@@ -122,6 +123,8 @@
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings\UserSettings.cs" />
+    <Compile Include="Shaders\Global.cs" />
+    <Compile Include="Shaders\GridShaderEffect.cs" />
     <Compile Include="ViewModelContracts\IMainViewModel.cs" />
     <Compile Include="ViewModelContracts\ISettingsViewModel.cs" />
     <Compile Include="ViewModelContracts\IZoomViewModel.cs" />
@@ -212,6 +215,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="Shaders\GridShader.cso" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -239,6 +243,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Shaders\GridShader.fx" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
