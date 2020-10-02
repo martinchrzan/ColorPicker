@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace ColorPicker.Settings
 {
+    public enum ColorFormat { hex, rgb, hsl, hsv};
+
     public interface IUserSettings
     {
         SettingItem<bool> RunOnStartup { get; }
@@ -15,5 +17,7 @@ namespace ColorPicker.Settings
         SettingItem<string> ActivationShortcut { get; }
 
         SettingItem<bool> ChangeCursor { get; }
+
+        SettingItem<ColorFormat> SelectedColorFormat { get; }
     }
 }

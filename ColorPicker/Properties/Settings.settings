@@ -17,5 +17,8 @@
     <Setting Name="ChangeCursorWhenPickingColor" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="SelectedColorFormat" Type="System.String" Scope="User">
+      <Value Profile="(Default)">HEX</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -7,9 +7,11 @@
              mc:Ignorable="d" 
              xmlns:e="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:behaviors="clr-namespace:ColorPicker.Behaviors"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:ColorPickerSettings="clr-namespace:ColorPicker.Settings"
              d:DesignHeight="450" d:DesignWidth="800" Background="#303030">
     <UserControl.Resources>
-        <Style TargetType="{x:Type TextBlock}">
+        <Style TargetType="{x:Type TextBlock}" x:Key="NormalTextBlock">
             <Style.Setters>
                 <Setter Property="Foreground" Value="White"/>
             </Style.Setters>
@@ -20,6 +22,13 @@
                 <Setter Property="Foreground" Value="White"/>
             </Style.Setters>
         </Style>
+
+        <ObjectDataProvider x:Key="colorFormat" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="ColorPickerSettings:ColorFormat"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </UserControl.Resources>
     <e:Interaction.Behaviors>
         <behaviors:SetShortcutBehavior MonitorKeys="{Binding ShowingKeyboardCaptureOverlay}" ShortCutPreview="{Binding ShortCutPreview, Mode=TwoWay}"/>
@@ -30,14 +39,19 @@
             <CheckBox Margin="5" IsChecked="{Binding AutomaticUpdates}" Content="Automatic updates"/>
             <CheckBox Margin="5" IsChecked="{Binding ChangeCursorWhenPickingColor}" Content="Change cursor when picking color"/>
             <WrapPanel>
-                <TextBlock Margin="5" Text="Open color picker shortcut:"/>
-                <TextBlock Margin="5" Text="{Binding ShortCut}"/>
+                <TextBlock VerticalAlignment="Center" Style="{StaticResource NormalTextBlock}" Margin="7" Text="Copied color format:"/>
+                <ComboBox Margin="5" Style="{x:Null}" Background="Black" SelectedItem="{Binding SelectedColorFormat}" ItemsSource="{Binding Source={StaticResource colorFormat}}" Width="80"/>
+            </WrapPanel>
+
+            <WrapPanel>
+                <TextBlock Style="{StaticResource NormalTextBlock}" Margin="7" Text="Open color picker shortcut:"/>
+                <TextBlock Style="{StaticResource NormalTextBlock}" Margin="5" Text="{Binding ShortCut}"/>
             </WrapPanel>
             <Button Margin="5" Content="Change shortcut" Command="{Binding ChangeShortcutCommand}"/>
 
             <Button Margin="5" Content="Check and install updates" Command="{Binding CheckForUpdatesCommand}"/>
-            <TextBlock Margin="5,10,0,0" FontWeight="SemiBold" Text="{Binding ApplicationVersion, StringFormat={}Version: {0}}" HorizontalAlignment="Right"/>
-            <TextBlock HorizontalAlignment="Right">           
+            <TextBlock Style="{StaticResource NormalTextBlock}" Margin="5,10,0,0" FontWeight="SemiBold" Text="{Binding ApplicationVersion, StringFormat={}Version: {0}}" HorizontalAlignment="Right"/>
+            <TextBlock Style="{StaticResource NormalTextBlock}" HorizontalAlignment="Right">           
                     <Hyperlink NavigateUri="http://www.github.com/martinchrzan/ColorPicker">
                         <e:Interaction.Behaviors>
                             <behaviors:HyperlinkBehavior/>
@@ -45,13 +59,13 @@
                         Project website
                     </Hyperlink>
             </TextBlock>
-            <TextBlock HorizontalAlignment="Right" Text="Martin Chrzan © 2020" FontWeight="Light"/>      
+            <TextBlock Style="{StaticResource NormalTextBlock}" HorizontalAlignment="Right" Text="Martin Chrzan © 2020" FontWeight="Light"/>      
         </StackPanel>
 
         <Border Background="Black" Visibility="{Binding ShowingKeyboardCaptureOverlay, Converter={StaticResource bool2VisibilityConverter}}">
             <StackPanel VerticalAlignment="Center">
-                <TextBlock Text="Press keys" FontSize="15" FontWeight="Light" Margin="0,0" HorizontalAlignment="Center"/>
-                <TextBlock Text="{Binding ShortCutPreview}" FontSize="16" FontWeight="Bold" Margin="0,15" HorizontalAlignment="Center"/>
+                <TextBlock Style="{StaticResource NormalTextBlock}" Text="Press keys" FontSize="15" FontWeight="Light" Margin="0,0" HorizontalAlignment="Center"/>
+                <TextBlock Style="{StaticResource NormalTextBlock}" Text="{Binding ShortCutPreview}" FontSize="16" FontWeight="Bold" Margin="0,15" HorizontalAlignment="Center"/>
                 <WrapPanel HorizontalAlignment="Center" Margin="0,30,0,0">
                     <Button Content="Cancel" Command="{Binding CancelShortcutCommand}" Margin="10,0" HorizontalAlignment="Center" Width="100" />
                     <Button Content="OK" Command="{Binding ConfirmShortcutCommand}" Margin="10,0" HorizontalAlignment="Center" Width="100"/>
@@ -60,7 +74,7 @@
         </Border>
 
         <Border Background="Black" Visibility="{Binding CheckingForUpdateInProgress, Converter={StaticResource bool2VisibilityConverter}}">
-            <TextBlock Text="Checking for updates" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
+            <TextBlock Style="{StaticResource NormalTextBlock}" Text="Checking for updates" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
         </Border>
 
         <Border BorderThickness="4,0,4,0" BorderBrush="#505050"/>

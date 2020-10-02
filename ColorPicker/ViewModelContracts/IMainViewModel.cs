@@ -4,10 +4,8 @@ namespace ColorPicker.ViewModelContracts
 {
     public interface IMainViewModel
     {
-        string HexColor { get; }
+        string ColorString { get; }
 
-        string RgbColor { get; }
-
-        Brush ColorBrush { get; }
+        Brush DisplayedColorBrush { get; }
     }
 }

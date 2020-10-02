@@ -79,6 +79,19 @@ namespace ColorPicker.ViewModels
             }
         }
 
+        public ColorFormat SelectedColorFormat
+        {
+            get
+            {
+                return _userSettings.SelectedColorFormat.Value;
+            }
+            set
+            {
+                _userSettings.SelectedColorFormat.Value = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string ShortCutPreview
         {
             get

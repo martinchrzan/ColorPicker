@@ -82,5 +82,17 @@ namespace ColorPicker.Properties {
                 this["ChangeCursorWhenPickingColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("HEX")]
+        public string SelectedColorFormat {
+            get {
+                return ((string)(this["SelectedColorFormat"]));
+            }
+            set {
+                this["SelectedColorFormat"] = value;
+            }
+        }
     }
 }

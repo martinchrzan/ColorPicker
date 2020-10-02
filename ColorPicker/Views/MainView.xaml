@@ -10,19 +10,13 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
-                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="35"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-
+          
             <Border Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Column="1" Background="#202020" BorderThickness="1" BorderBrush="Black" />
-            <Border Background="{Binding ColorBrush}" BorderBrush="Black" Grid.Column="1" BorderThickness="1" Grid.RowSpan="2" x:Name="ColorBorder"/>
-            <TextBlock Margin="7,5,5,5" Foreground="White" Grid.Row="0" Grid.Column="2" Text="{Binding HexColor}"/>
-            <TextBlock Margin="7,0,0,0" Foreground="White" Grid.Row="1" Grid.Column="2" Text="{Binding RgbColor}"/>
-
+            <Border Background="{Binding DisplayedColorBrush}" BorderBrush="Black" Grid.Column="1" BorderThickness="1" Grid.RowSpan="2" x:Name="ColorBorder"/>
+            <TextBlock Margin="7,5,5,5" VerticalAlignment="Center" Foreground="White" Grid.Row="0" Grid.Column="2" Text="{Binding ColorString}"/>
 
             <Border BorderBrush="#505050" Grid.Column="2" Margin="0,1,1,1" Grid.RowSpan="2" BorderThickness="3,0,3,0" />
         </Grid>

@@ -101,6 +101,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\ViewModelBase.cs" />
+    <Compile Include="Helpers\ColorFormatHelper.cs" />
     <Compile Include="Helpers\IThrottledActionInvoker.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\RegistryHelper.cs" />

@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using ColorPicker.Settings;
+using System.Windows.Input;
 
 namespace ColorPicker.ViewModelContracts
 {
@@ -18,6 +19,8 @@ namespace ColorPicker.ViewModelContracts
 
         string ApplicationVersion { get; }
 
+        ColorFormat SelectedColorFormat { get; }
+        
         bool CheckingForUpdateInProgress { get; }
 
         ICommand ChangeShortcutCommand { get; }
