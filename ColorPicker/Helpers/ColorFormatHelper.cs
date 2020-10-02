@@ -37,8 +37,8 @@ namespace ColorPicker.Helpers
         private static string ColorToHsl(System.Drawing.Color c)
         {
             var h = Math.Round(c.GetHue());
-            var s = Math.Round(c.GetSaturation());
-            var l = Math.Round(c.GetBrightness());
+            var s = Math.Round(c.GetSaturation()*100);
+            var l = Math.Round(c.GetBrightness()*100);
             return "hsl(" + h + ", " + s + "%, " + l + "%)";
         }
 
