@@ -19,6 +19,8 @@ namespace ColorPicker.Helpers
                     return ColorToHsv(c);
                 case ColorFormat.rgb:
                     return ColorToRgb(c);
+                case ColorFormat.vec4:
+                    return ColorToVec4(c);
                 default:
                     return string.Empty;
             }
@@ -52,6 +54,11 @@ namespace ColorPicker.Helpers
             var v = max / 255d;
 
             return "hsv(" + h + ", " + Math.Round(s*100) + ", " + Math.Round(v*100) + ")";
+        }
+
+        private static string ColorToVec4(System.Drawing.Color c)
+        {
+            return string.Format("vec4({0}, {1}, {2}, 1)", Math.Round(c.R / 255f, 3), Math.Round(c.G / 255f, 3), Math.Round(c.B / 255f, 3));  
         }
     }
 }

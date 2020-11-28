@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ColorPicker.Settings
 {
-    public enum ColorFormat { hex, rgb, hsl, hsv};
+    public enum ColorFormat { hex, rgb, hsl, hsv, vec4};
 
     public interface IUserSettings
     {
