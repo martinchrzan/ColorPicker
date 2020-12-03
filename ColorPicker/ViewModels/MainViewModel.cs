@@ -102,7 +102,7 @@ namespace ColorPicker.ViewModels
                 {
                     try
                     {
-                        Clipboard.SetText(ColorString.ToLowerInvariant());
+                        Clipboard.SetDataObject(ColorString.ToLowerInvariant());
                         break;
                     }
                     catch (COMException ex)
