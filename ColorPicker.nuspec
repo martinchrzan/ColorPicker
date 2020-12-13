@@ -2,16 +2,15 @@
 <package>
   <metadata>
     <id>ColorPicker</id>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
     <authors>Martin Chrzan</authors>
     <owners>Martin Chrzan</owners>
     <licenseUrl>https://github.com/martinchrzan/ColorPicker/blob/master/LICENSE</licenseUrl>
     <projectUrl>http://github.com/martinchrzan/ColorPicker</projectUrl>
     <!--<iconUrl></iconUrl>-->
     <releaseNotes>
-      Added vec4 color format
-	  Picker width is now dynamic
-	  Fixed an issue where new color format was not updated until the color changed
+      Fixed freezing of picker when used with other clipboard tools
+	  Updated settings window design
     </releaseNotes>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Color Picker</description>
