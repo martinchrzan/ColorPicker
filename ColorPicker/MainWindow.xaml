@@ -13,5 +13,5 @@
         <behaviors:NotifyIconBehavior/>
         <behaviors:AppearAnimationBehavior/>
     </e:Interaction.Behaviors>
-    <ContentControl x:Name="MainView" Content="{Binding MainViewModel}"/>
+    <ContentControl x:Name="MainView" Content="{Binding MainViewModel}"/> 
 </Window>

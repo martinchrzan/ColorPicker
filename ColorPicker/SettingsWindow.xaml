@@ -5,6 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ColorPicker"
         mc:Ignorable="d"
-        Title="Color picker settings" Width="300" SizeToContent="Height" ResizeMode="NoResize" 
-        ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Topmost="True" WindowStyle="SingleBorderWindow">
+        Title="Color picker settings" ResizeMode="NoResize" 
+        ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Topmost="True" WindowStyle="SingleBorderWindow" SizeToContent="WidthAndHeight">
 </Window>
