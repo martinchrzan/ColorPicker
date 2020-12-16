@@ -13,3 +13,9 @@ Simple and quick system-wide color picker. Pick colors from any currently runnin
 [**Download the latest release here**](https://github.com/martinchrzan/ColorPicker/releases/latest)
 
 ![](showcase.gif)
+
+## Differences from the implementation in PowerToys
+- different set of color formats, vec4 is only here, however there are some missing
+- different design
+- no telemetry
+
