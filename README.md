@@ -10,12 +10,17 @@ Simple and quick system-wide color picker. Pick colors from any currently runnin
 
 **To zoom in** - *Mouse wheel*
 
+**To open Colors History Palette** - *Right mouse click while Color Picker opened*
+
 [**Download the latest release here**](https://github.com/martinchrzan/ColorPicker/releases/latest)
 
 ![](showcase.gif)
+![](ColorsHistory.gif)
+
 
 ## Differences from the implementation in PowerToys
 - different set of color formats, vec4 is only here, however there are some missing
+- quick colors history palette
 - different design
 - no telemetry
 - lightweight
