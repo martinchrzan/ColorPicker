@@ -9,8 +9,8 @@
     <projectUrl>http://github.com/martinchrzan/ColorPicker</projectUrl>
     <!--<iconUrl></iconUrl>-->
     <releaseNotes>
-      Added Colors History Pallete activated by right mouse click when color picker is open
-      Pressing Esc closes Zoom window or Colors History Pallete if opened
+      Added Colors History Palette activated by right mouse click when color picker is open
+      Pressing Esc closes Zoom window or Colors History Palette if opened
     </releaseNotes>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Color Picker</description>
