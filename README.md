@@ -10,11 +10,12 @@ Simple and quick system-wide color picker. Pick colors from any currently runnin
 
 **To zoom in** - *Mouse wheel*
 
-**To open Colors History Palette** - *Right mouse click while Color Picker opened*
+**To open Colors History Palette** - *Right mouse click while Color Picker opened* - holds up to 10 previously copied colors
 
 [**Download the latest release here**](https://github.com/martinchrzan/ColorPicker/releases/latest)
 
 ![](showcase.gif)
+
 ![](ColorsHistory.gif)
 
 
