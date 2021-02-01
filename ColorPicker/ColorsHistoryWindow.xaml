@@ -10,7 +10,7 @@
     <Grid>
         <controls:CircularMenu x:Name="circularMenu" IsOpen="False" Background="#CCFFFFFF">
             <controls:CircularMenu.CentralItem>
-                <controls:CircularMenuCentralItem/>
+                <controls:CircularMenuCentralItem ContentText="History empty"/>
             </controls:CircularMenu.CentralItem>
         </controls:CircularMenu>
     </Grid>

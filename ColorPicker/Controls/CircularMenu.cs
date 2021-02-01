@@ -54,7 +54,6 @@ namespace ColorPicker.Controls
             base.BeginInit();
         }
 
-
         private void Items_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
@@ -68,6 +67,10 @@ namespace ColorPicker.Controls
                 (e.NewItems[0] as CircularMenuItem).MouseEnter -= CircularMenuItem_MouseEnter;
                 (e.NewItems[0] as CircularMenuItem).MouseLeave -= CircularMenuItem_MouseLeave; 
                 (e.NewItems[0] as CircularMenuItem).PreviewMouseDown -= CircularMenuItem_MouseDown;
+            }
+            if(Items?.Count > 0)
+            {
+                CentralItem.ContentText = string.Empty;
             }
         }
 
