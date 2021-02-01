@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using static ColorPicker.Win32Apis;
 
@@ -13,24 +14,39 @@ namespace ColorPicker.Mouse
     {
         private const int WH_MOUSE_LL = 14;
         private const int WM_LBUTTONDOWN = 0x0201;
+        private const int WM_RBUTTONDOWN = 0x0204;
+        private const int WM_RBUTTONUP = 0x0205;
         private const int WM_MOUSEWHEEL = 0x020A;
         private const int WHEEL_DELTA = 120;
 
         private IntPtr _mouseHookHandle;
         private HookProc _mouseDelegate;
 
-        private event MouseUpEventHandler MouseDown;
-        public event MouseUpEventHandler OnMouseDown
+        private event MouseUpEventHandler LeftMouseDown;
+        public event MouseUpEventHandler OnLeftMouseDown
         {
             add
             {
                 Subscribe();
-                MouseDown += value;
+                LeftMouseDown += value;
             }
             remove
             {
-                MouseDown -= value;
+                LeftMouseDown -= value;
                 Unsubscribe();
+            }
+        }
+
+        private event MouseUpEventHandler RightMouseDown;
+        public event MouseUpEventHandler OnRightMouseDown
+        {
+            add
+            {
+                RightMouseDown += value;
+            }
+            remove
+            {
+                RightMouseDown -= value;
             }
         }
 
@@ -88,15 +104,21 @@ namespace ColorPicker.Mouse
                 MSLLHOOKSTRUCT mouseHookStruct = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
                 if (wParam.ToInt32() == WM_LBUTTONDOWN)
                 {
-                    if (MouseDown != null)
-                    {
-                        MouseDown.Invoke(null, new System.Drawing.Point(mouseHookStruct.pt.x, mouseHookStruct.pt.y));
-                    }
+                    LeftMouseDown?.Invoke(null, new System.Drawing.Point(mouseHookStruct.pt.x, mouseHookStruct.pt.y));
                     return new IntPtr(-1);
                 }
-                if(wParam.ToInt32() == WM_MOUSEWHEEL)
+                if (wParam.ToInt32() == WM_RBUTTONDOWN)
                 {
-                    if(MouseWheel != null)
+                    return new IntPtr(-1);
+                }
+                if(wParam.ToInt32() == WM_RBUTTONUP)
+                {
+                    RightMouseDown?.Invoke(null, new System.Drawing.Point(mouseHookStruct.pt.x, mouseHookStruct.pt.y));
+                    return new IntPtr(-1);
+                }
+                if (wParam.ToInt32() == WM_MOUSEWHEEL)
+                {
+                    if (MouseWheel != null)
                     {
                         MouseDevice mouseDev = InputManager.Current.PrimaryMouseDevice;
                         MouseWheel.Invoke(null, new MouseWheelEventArgs(mouseDev, Environment.TickCount, (int)mouseHookStruct.mouseData >> 16));

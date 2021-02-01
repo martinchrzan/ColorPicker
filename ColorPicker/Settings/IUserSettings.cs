@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using Windows.ApplicationModel.Appointments.AppointmentsProvider;
 
 namespace ColorPicker.Settings
 {
@@ -19,5 +17,9 @@ namespace ColorPicker.Settings
         SettingItem<bool> ChangeCursor { get; }
 
         SettingItem<ColorFormat> SelectedColorFormat { get; }
+
+        List<Color> ColorsHistory { get; }
+
+        void AddColorIntoHistory(Color color);
     }
 }

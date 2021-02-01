@@ -42,7 +42,9 @@ namespace ColorPicker.Mouse
 
         public event EventHandler<Tuple<System.Windows.Point, bool>> OnMouseWheel;
 
-        public event MouseUpEventHandler OnMouseDown;
+        public event MouseUpEventHandler OnLeftMouseDown;
+
+        public event MouseUpEventHandler OnRightMouseDown;
 
         public System.Windows.Point CurrentPosition
         {
@@ -104,7 +106,8 @@ namespace ColorPicker.Mouse
                 _timer.Start();
             }
 
-            _mouseHook.OnMouseDown += MouseHook_OnMouseDown;
+            _mouseHook.OnLeftMouseDown += MouseHook_OnLeftMouseDown;
+            _mouseHook.OnRightMouseDown += MouseHook_OnRightMouseDown;
             _mouseHook.OnMouseWheel += MouseHook_OnMouseWheel;
 
             if (_userSettings.ChangeCursor.Value)
@@ -124,10 +127,16 @@ namespace ColorPicker.Mouse
             OnMouseWheel?.Invoke(this, new Tuple<System.Windows.Point, bool>(_previousMousePosition, zoomIn));
         }
 
-        private void MouseHook_OnMouseDown(object sender, Point p)
+        private void MouseHook_OnLeftMouseDown(object sender, Point p)
         {
             DisposeMouseHook();
-            OnMouseDown?.Invoke(this, p);
+            OnLeftMouseDown?.Invoke(this, p);
+        }
+
+        private void MouseHook_OnRightMouseDown(object sender, Point p)
+        {
+            DisposeMouseHook();
+            OnRightMouseDown?.Invoke(this, p);
         }
 
         private void SelectedColorFormat_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -143,7 +152,8 @@ namespace ColorPicker.Mouse
             }
             
             _previousMousePosition = new System.Windows.Point(-1, 1);
-            _mouseHook.OnMouseDown -= MouseHook_OnMouseDown;
+            _mouseHook.OnLeftMouseDown -= MouseHook_OnLeftMouseDown;
+            _mouseHook.OnRightMouseDown -= MouseHook_OnRightMouseDown;
             _mouseHook.OnMouseWheel -= MouseHook_OnMouseWheel;
 
             if (_userSettings.ChangeCursor.Value)

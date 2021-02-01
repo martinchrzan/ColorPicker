@@ -20,5 +20,8 @@
     <Setting Name="SelectedColorFormat" Type="System.String" Scope="User">
       <Value Profile="(Default)">HEX</Value>
     </Setting>
+    <Setting Name="ColorsHistory" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

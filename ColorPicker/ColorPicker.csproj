@@ -99,9 +99,19 @@
     <Compile Include="Behaviors\ResizeBehavior.cs" />
     <Compile Include="Behaviors\SetShortcutBehavior.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="ColorsHistoryWindow.xaml.cs">
+      <DependentUpon>ColorsHistoryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CircularMenuCentralItem.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\ViewModelBase.cs" />
+    <Compile Include="Controls\CircularMenu.cs" />
+    <Compile Include="Controls\CircularMenuItem.cs" />
+    <Compile Include="Controls\PieShape.cs" />
+    <Compile Include="Converters\DrawingColorToSolidColorBrushConverter.cs" />
+    <Compile Include="Helpers\ClipboardHelper.cs" />
     <Compile Include="Helpers\ColorFormatHelper.cs" />
+    <Compile Include="Helpers\ColorsHistoryWindowHelper.cs" />
     <Compile Include="Helpers\IThrottledActionInvoker.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\RegistryHelper.cs" />
@@ -148,6 +158,10 @@
     <Compile Include="ZoomWindow.xaml.cs">
       <DependentUpon>ZoomWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="ColorsHistoryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
