@@ -2,19 +2,19 @@
 <package>
   <metadata>
     <id>ColorPicker</id>
-    <version>1.0.9</version>
+    <version>1.1.0</version>
     <authors>Martin Chrzan</authors>
     <owners>Martin Chrzan</owners>
     <licenseUrl>https://github.com/martinchrzan/ColorPicker/blob/master/LICENSE</licenseUrl>
     <projectUrl>http://github.com/martinchrzan/ColorPicker</projectUrl>
     <!--<iconUrl></iconUrl>-->
     <releaseNotes>
-      Fixed freezing of picker when used with other clipboard tools
-	  Updated settings window design
+      Added Colors History Pallete activated by right mouse click when color picker is open
+      Pressing Esc closes Zoom window or Colors History Pallete if opened
     </releaseNotes>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Color Picker</description>
-    <copyright>Martin Chrzan Copyright 2020</copyright>
+    <copyright>Martin Chrzan Copyright 2021</copyright>
     <tags>colorpicker</tags>
   </metadata>
   <files>
