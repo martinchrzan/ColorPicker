@@ -9,11 +9,10 @@
              xmlns:behaviors="clr-namespace:ColorPicker.Behaviors"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:ColorPickerSettings="clr-namespace:ColorPicker.Settings"
-             d:DesignHeight="450" d:DesignWidth="800" Background="#303030" Width="310">
+             d:DesignHeight="450" d:DesignWidth="800" Background="{DynamicResource AppBackgroundBrush}" Width="310">
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="NormalTextBlock">
             <Style.Setters>
-                <Setter Property="Foreground" Value="White"/>
                 <Setter Property="FontSize" Value="14"/>
             </Style.Setters>
         </Style>
@@ -35,7 +34,7 @@
             <Rectangle Height="1" Fill="DarkGray" Margin="5"/>
             <WrapPanel>
                 <TextBlock VerticalAlignment="Center" Style="{StaticResource NormalTextBlock}" FontWeight="Light" Margin="7" Text="Copied color format:"/>
-                <ComboBox Margin="5" Background="Black" SelectedItem="{Binding SelectedColorFormat}" ItemsSource="{Binding Source={StaticResource colorFormat}}" Width="90"/>
+                <ComboBox Margin="5" SelectedItem="{Binding SelectedColorFormat}" ItemsSource="{Binding Source={StaticResource colorFormat}}" Width="90"/>
             </WrapPanel>
 
             <Rectangle Height="1" Fill="DarkGray" Margin="5"/>
@@ -55,7 +54,7 @@
                 
                 <Button Margin="5,-8,0,0" Grid.ColumnSpan="2" Content="Check for updates" FontWeight="Light" FontSize="13"  Command="{Binding CheckForUpdatesCommand}"/>
 
-                <StackPanel Grid.Column="1" Margin="0,5,5,0">
+                <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Margin="0,5,5,0">
                     <TextBlock Style="{StaticResource NormalTextBlock}" Margin="5,10,0,0" FontWeight="SemiBold" Text="{Binding ApplicationVersion, StringFormat={}Version: {0}}" HorizontalAlignment="Right"/>
                     <TextBlock Style="{StaticResource NormalTextBlock}" HorizontalAlignment="Right">           
                     <Hyperlink NavigateUri="http://www.github.com/martinchrzan/ColorPicker">
@@ -71,7 +70,7 @@
            
         </StackPanel>
 
-        <Border Background="Black" Visibility="{Binding ShowingKeyboardCaptureOverlay, Converter={StaticResource bool2VisibilityConverter}}">
+        <Border Background="{DynamicResource SystemControlBackgroundAltHighBrush}" Visibility="{Binding ShowingKeyboardCaptureOverlay, Converter={StaticResource bool2VisibilityConverter}}">
             <StackPanel VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource NormalTextBlock}" Text="Press keys" FontSize="15" FontWeight="Light" Margin="0,0" HorizontalAlignment="Center"/>
                 <TextBlock Style="{StaticResource NormalTextBlock}" Text="{Binding ShortCutPreview}" FontSize="16" FontWeight="Bold" Margin="0,15" HorizontalAlignment="Center"/>
@@ -82,7 +81,7 @@
             </StackPanel>
         </Border>
 
-        <Border Background="Black" Visibility="{Binding CheckingForUpdateInProgress, Converter={StaticResource bool2VisibilityConverter}}">
+        <Border Background="{DynamicResource SystemControlBackgroundAltHighBrush}" Visibility="{Binding CheckingForUpdateInProgress, Converter={StaticResource bool2VisibilityConverter}}">
             <TextBlock Style="{StaticResource NormalTextBlock}" Text="Checking for updates" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
         </Border>
 

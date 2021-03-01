@@ -5,6 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ColorPicker"
         mc:Ignorable="d"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
         Title="Color picker settings" ResizeMode="NoResize" 
+        Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}"
+        Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
+        ui:ThemeManager.IsThemeAware="True"
+        ui:TitleBar.ExtendViewIntoTitleBar="True"
+        ui:WindowHelper.UseModernWindowStyle="True"
         ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Topmost="True" WindowStyle="SingleBorderWindow" SizeToContent="WidthAndHeight">
 </Window>
