@@ -56,18 +56,23 @@ namespace ColorPicker.Controls
 
         private void Items_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+            var newItem = e.NewItems[0] as CircularMenuItem;
+            if(newItem != null)
             {
-                (e.NewItems[0] as CircularMenuItem).MouseEnter += CircularMenuItem_MouseEnter;
-                (e.NewItems[0] as CircularMenuItem).PreviewMouseDown += CircularMenuItem_MouseDown;
-                (e.NewItems[0] as CircularMenuItem).MouseLeave += CircularMenuItem_MouseLeave;
+                if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+                {
+                    newItem.MouseEnter += CircularMenuItem_MouseEnter;
+                    newItem.PreviewMouseDown += CircularMenuItem_MouseDown;
+                    newItem.MouseLeave += CircularMenuItem_MouseLeave;
+                }
+                else if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
+                {
+                    newItem.MouseEnter -= CircularMenuItem_MouseEnter;
+                    newItem.MouseLeave -= CircularMenuItem_MouseLeave;
+                    newItem.PreviewMouseDown -= CircularMenuItem_MouseDown;
+                }
             }
-            else if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
-            {
-                (e.NewItems[0] as CircularMenuItem).MouseEnter -= CircularMenuItem_MouseEnter;
-                (e.NewItems[0] as CircularMenuItem).MouseLeave -= CircularMenuItem_MouseLeave; 
-                (e.NewItems[0] as CircularMenuItem).PreviewMouseDown -= CircularMenuItem_MouseDown;
-            }
+            
             if(Items?.Count > 0)
             {
                 CentralItem.ContentText = string.Empty;
