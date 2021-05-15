@@ -2,15 +2,15 @@
 <package>
   <metadata>
     <id>ColorPicker</id>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
     <authors>Martin Chrzan</authors>
     <owners>Martin Chrzan</owners>
     <licenseUrl>https://github.com/martinchrzan/ColorPicker/blob/master/LICENSE</licenseUrl>
     <projectUrl>http://github.com/martinchrzan/ColorPicker</projectUrl>
     <!--<iconUrl></iconUrl>-->
     <releaseNotes>
-      Color Picker adapts to the current Windows theme
-	  Fixed colors in Settings window when using light theme
+      Fixing reverting of mouse cursor back to the original one after closing the picker.
+	  Updated signing certificate.
     </releaseNotes>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Color Picker</description>
