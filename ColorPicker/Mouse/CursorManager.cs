@@ -43,7 +43,7 @@ namespace ColorPicker.Mouse
             }
             catch (Exception ex)
             {
-                Logger.LogError("Failed to change cursor", ex);
+                Logger.LogError("Failed to change cursor. CurFile: " + curFile + " cursor registry name: " + cursorRegistryName, ex);
             }
         }
 
@@ -51,19 +51,19 @@ namespace ColorPicker.Mouse
         {
             if (string.IsNullOrEmpty(_originalArrowCursorPath))
             {
-                _originalArrowCursorPath = (string)Registry.GetValue(CursorsRegistryPath, ArrowRegistryName, string.Empty);
+                _originalArrowCursorPath = (string)Registry.GetValue(CursorsRegistryPath, ArrowRegistryName, string.Empty) ?? string.Empty;
             }
             if (string.IsNullOrEmpty(_originalIBeamCursorPath))
             {
-                _originalIBeamCursorPath = (string)Registry.GetValue(CursorsRegistryPath, IBeamRegistryName, string.Empty);
+                _originalIBeamCursorPath = (string)Registry.GetValue(CursorsRegistryPath, IBeamRegistryName, string.Empty) ?? string.Empty;
             }
             if (string.IsNullOrEmpty(_originalCrosshairCursorPath))
             {
-                _originalCrosshairCursorPath = (string)Registry.GetValue(CursorsRegistryPath, CrosshairRegistryName, string.Empty);
+                _originalCrosshairCursorPath = (string)Registry.GetValue(CursorsRegistryPath, CrosshairRegistryName, string.Empty) ?? string.Empty;
             }
             if (string.IsNullOrEmpty(_originalHandCursorPath))
             {
-                _originalHandCursorPath = (string)Registry.GetValue(CursorsRegistryPath, HandRegistryName, string.Empty);
+                _originalHandCursorPath = (string)Registry.GetValue(CursorsRegistryPath, HandRegistryName, string.Empty) ?? string.Empty;
             }
         }
 
