@@ -47,6 +47,7 @@ namespace ColorPicker.Mouse
         
         public void Dispose()
         {
+            _bmpGraphics.Dispose();
             _bmp.Dispose();
         }
 
