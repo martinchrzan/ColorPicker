@@ -12,28 +12,42 @@ namespace ColorPicker.Mouse
 {
     [Export(typeof(IMouseInfoProvider))]
     [PartCreationPolicy(CreationPolicy.Shared)]
-    public class MouseInfoProvider : IMouseInfoProvider
+    public sealed class MouseInfoProvider : IMouseInfoProvider, IDisposable
     {
         private const int MousePullInfoIntervalInMs = 10;
         private readonly DispatcherTimer _timer = new DispatcherTimer();
         private readonly MouseHook _mouseHook;
         private readonly IUserSettings _userSettings;
+        
         private System.Windows.Point _previousMousePosition = new System.Windows.Point(-1, 1);
         private Color _previousColor = Color.Transparent;
         private bool _colorFormatChanged = false;
+        
+        private readonly Bitmap _bmp; // 1x1px-sized bitmap to capture desktop pixel via GDI.
+        private readonly Graphics _bmpGraphics;
 
         [ImportingConstructor]
         public MouseInfoProvider(AppStateHandler appStateMonitor, IUserSettings userSettings)
         {
+            _bmp = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
+            _bmpGraphics = Graphics.FromImage(_bmp);
+            
+            _mouseHook = new MouseHook();
+            _userSettings = userSettings;
+        
             _timer.Interval = TimeSpan.FromMilliseconds(MousePullInfoIntervalInMs);
             _timer.Tick += Timer_Tick;
 
             appStateMonitor.AppShown += AppStateMonitor_AppShown;
             appStateMonitor.AppClosed += AppStateMonitor_AppClosed;
             appStateMonitor.AppHidden += AppStateMonitor_AppClosed;
-            _mouseHook = new MouseHook();
-            _userSettings = userSettings;
+            
             _userSettings.SelectedColorFormat.PropertyChanged += SelectedColorFormat_PropertyChanged;
+        }
+        
+        public void Dispose()
+        {
+            _bmp.Dispose();
         }
 
         public event EventHandler<Color> MouseColorChanged;
@@ -79,12 +93,11 @@ namespace ColorPicker.Mouse
 
         private static Color GetPixelColor(System.Windows.Point mousePosition)
         {
-            var rect = new Rectangle((int)mousePosition.X, (int)mousePosition.Y, 1, 1);
-            var bmp = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppArgb);
-            var g = Graphics.FromImage(bmp);
-            g.CopyFromScreen(rect.Left, rect.Top, 0, 0, bmp.Size, CopyPixelOperation.SourceCopy);
+            int x = (int)mousePosition.X;
+            int y = (int)mousePosition.Y;
+            _bmpGraphics.CopyFromScreen(sourceX: x, sourceY: y, destinationX: 0, destinationY: 0, blockRegionSize: _bmp.Size, CopyPixelOperation.SourceCopy);
 
-            return bmp.GetPixel(0, 0);
+            return _bmp.GetPixel(0, 0);
         }
 
         private static System.Windows.Point GetCursorPosition()
