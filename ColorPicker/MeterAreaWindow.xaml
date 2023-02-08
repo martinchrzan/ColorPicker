@@ -10,26 +10,22 @@
         xmlns:behaviors="clr-namespace:ColorPicker.Behaviors"
         Tag="MeterAreaWindow">
     <e:Interaction.Behaviors>
-        <behaviors:ResizeMonitorAreaBehavior RTextBlock="{Binding ElementName=rTextBlock}" GTextBlock="{Binding ElementName=gTextBlock}" BTextBlock="{Binding ElementName=bTextBlock}" CaptureAreaBorder="{Binding ElementName=captureAreaBorder}" RGBAreaBorder="{Binding ElementName=rgbAreaBorder}" SideBorderColumn="{Binding ElementName=sideColumn}"/>
+        <behaviors:ResizeMonitorAreaBehavior ColorTextBlock="{Binding ElementName=colorTextBlock}" CaptureAreaBorder="{Binding ElementName=captureAreaBorder}" ColorAreaBorder="{Binding ElementName=colorAreaBorder}" BottomBorderRow="{Binding ElementName=colorRow}"/>
     </e:Interaction.Behaviors>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition x:Name="sideColumn" Width="0"/>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition x:Name="colorRow" Height="0" />
+        </Grid.RowDefinitions>
 
-        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="2,0,2,2" x:Name="captureAreaBorder">
+        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="2,0,2,2" x:Name="captureAreaBorder" >
             <Border BorderBrush="White" BorderThickness="1"/>
         </Border>
 
-        <Border x:Name="rgbAreaBorder" CornerRadius="0,7,7,0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Black" Width="0">
+        <Border x:Name="colorAreaBorder" CornerRadius="0,0,7,7" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="Black" Height="0">
             <Grid>
-                <StackPanel>
-                    <TextBlock Margin="5,5,5,0" Text="R: 200" FontSize="12" FontWeight="Light" Foreground="White" x:Name="rTextBlock"/>
-                    <TextBlock Margin="5,5,5,0" Text="R: 200" FontSize="12" FontWeight="Light" Foreground="White" x:Name="gTextBlock"/>
-                    <TextBlock Margin="5,5,5,5" Text="R: 200" FontSize="12" FontWeight="Light" Foreground="White" x:Name="bTextBlock"/>
-                </StackPanel>
-                <Border BorderBrush="#FFFFFF" BorderThickness="0,0,1,0" Margin="0,0,2,0" CornerRadius="0,7,7,0"/>
+                <TextBlock Margin="10,5,10,0"  FontSize="12" FontWeight="Light" Foreground="White" x:Name="colorTextBlock" />
+                <Border BorderBrush="#FFFFFF" BorderThickness="1" Margin="2,-3,2,0" CornerRadius="0,0,7,7"/>
             </Grid>
 
         </Border>

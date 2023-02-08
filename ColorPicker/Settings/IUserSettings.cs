@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using Windows.ApplicationModel.Appointments.AppointmentsProvider;
 
 namespace ColorPicker.Settings
 {

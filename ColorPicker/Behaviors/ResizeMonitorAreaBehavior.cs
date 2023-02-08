@@ -1,16 +1,11 @@
 ﻿using ColorMeter.Helpers;
 using ColorPicker.Helpers;
 using ColorPicker.Mouse;
-using ColorPicker;
+using ColorPicker.Settings;
 using Microsoft.Xaml.Behaviors;
 using System;
-using System.Diagnostics;
-using System.Drawing.Drawing2D;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
@@ -19,22 +14,21 @@ namespace ColorPicker.Behaviors
     public class ResizeMonitorAreaBehavior : Behavior<Window>
     {
         private const int MinHeight = 60;
-        private const int SideBorderWidth = 50;
+        private const int BottomBorderHeight = 30;
         private IMouseInfoProvider _mouseInfoProvider;
         private IColorProvider _colorProvider;
+        private IUserSettings _userSettings;
         private DispatcherTimer _dispatcherTimer = new DispatcherTimer();
         private Point _corner;
 
         public static DependencyProperty CaptureAreaBorderProperty = DependencyProperty.Register("CaptureAreaBorder", typeof(Border), typeof(ResizeMonitorAreaBehavior));
 
-        public static DependencyProperty RGBAreaBorderProperty = DependencyProperty.Register("RGBAreaBorder", typeof(Border), typeof(ResizeMonitorAreaBehavior));
+        public static DependencyProperty ColorAreaBorderProperty = DependencyProperty.Register("ColorAreaBorder", typeof(Border), typeof(ResizeMonitorAreaBehavior));
 
-        public static DependencyProperty SideBorderColumnProperty = DependencyProperty.Register("SideBorderColumn", typeof(ColumnDefinition), typeof(ResizeMonitorAreaBehavior));
+        public static DependencyProperty BottomBorderRowProperty = DependencyProperty.Register("BottomBorderRow", typeof(RowDefinition), typeof(ResizeMonitorAreaBehavior));
 
-        public static DependencyProperty RTextBlockProperty = DependencyProperty.Register("RTextBlock", typeof(TextBlock), typeof(ResizeMonitorAreaBehavior));
-        public static DependencyProperty GTextBlockProperty = DependencyProperty.Register("GTextBlock", typeof(TextBlock), typeof(ResizeMonitorAreaBehavior));
-        public static DependencyProperty BTextBlockProperty = DependencyProperty.Register("BTextBlock", typeof(TextBlock), typeof(ResizeMonitorAreaBehavior));
-
+        public static DependencyProperty ColorTextBlockProperty = DependencyProperty.Register("ColorTextBlock", typeof(TextBlock), typeof(ResizeMonitorAreaBehavior));
+       
         public Border CaptureAreaBorder
         {
             get
@@ -47,63 +41,39 @@ namespace ColorPicker.Behaviors
             }
         }
 
-        public Border RGBAreaBorder
+        public Border ColorAreaBorder
         {
             get
             {
-                return (Border)GetValue(RGBAreaBorderProperty);
+                return (Border)GetValue(ColorAreaBorderProperty);
             }
             set
             {
-                SetValue(RGBAreaBorderProperty, value);
+                SetValue(ColorAreaBorderProperty, value);
             }
         }
 
-        public ColumnDefinition SideBorderColumn
+        public RowDefinition BottomBorderRow
         {
             get
             {
-                return (ColumnDefinition)GetValue(SideBorderColumnProperty);
+                return (RowDefinition)GetValue(BottomBorderRowProperty);
             }
             set
             {
-                SetValue(SideBorderColumnProperty, value);
+                SetValue(BottomBorderRowProperty, value);
             }
         }
 
-        public TextBlock RTextBlock
+        public TextBlock ColorTextBlock
         {
             get
             {
-                return (TextBlock)GetValue(RTextBlockProperty);
+                return (TextBlock)GetValue(ColorTextBlockProperty);
             }
             set
             {
-                SetValue(RTextBlockProperty, value);
-            }
-        }
-
-        public TextBlock GTextBlock
-        {
-            get
-            {
-                return (TextBlock)GetValue(GTextBlockProperty);
-            }
-            set
-            {
-                SetValue(GTextBlockProperty, value);
-            }
-        }
-
-        public TextBlock BTextBlock
-        {
-            get
-            {
-                return (TextBlock)GetValue(BTextBlockProperty);
-            }
-            set
-            {
-                SetValue(BTextBlockProperty, value);
+                SetValue(ColorTextBlockProperty, value);
             }
         }
 
@@ -112,6 +82,7 @@ namespace ColorPicker.Behaviors
             base.OnAttached();
             _mouseInfoProvider = Bootstrapper.Container.GetExportedValue<IMouseInfoProvider>();
             _colorProvider = Bootstrapper.Container.GetExportedValue<IColorProvider>();
+            _userSettings = Bootstrapper.Container.GetExportedValue<IUserSettings>();
             _mouseInfoProvider.OnLeftMouseDown += MouseInfoProvider_OnLeftMouseDown;
 
             AssociatedObject.Loaded += AssociatedObject_Loaded;
@@ -137,8 +108,7 @@ namespace ColorPicker.Behaviors
 
                     AssociatedObject.SizeToContent = SizeToContent.WidthAndHeight;
 
-                    //AssociatedObject.Width += SideBorderWidth;
-                    SideBorderColumn.Width = new GridLength(SideBorderWidth);
+                    BottomBorderRow.Height = new GridLength(BottomBorderHeight);
 
                     if (AssociatedObject.Height < MinHeight)
                     {
@@ -146,16 +116,18 @@ namespace ColorPicker.Behaviors
                         AssociatedObject.Height = MinHeight;
                     }
 
-                    var setWidth = new DoubleAnimation(0, SideBorderWidth, new Duration(TimeSpan.FromMilliseconds(150)), FillBehavior.Stop);
-                    setWidth.Completed += (s1, e1) =>
+                    CaptureAreaBorder.HorizontalAlignment = HorizontalAlignment.Left;
+
+                    var setHeight = new DoubleAnimation(0, BottomBorderHeight, new Duration(TimeSpan.FromMilliseconds(150)), FillBehavior.Stop);
+                    setHeight.Completed += (s1, e1) =>
                     {
-                        RGBAreaBorder.BeginAnimation(FrameworkElement.WidthProperty, null); RGBAreaBorder.Width = SideBorderWidth;
+                        ColorAreaBorder.BeginAnimation(FrameworkElement.HeightProperty, null); ColorAreaBorder.Height = BottomBorderHeight;
                         _dispatcherTimer.Start();
                     };
 
-                    setWidth.EasingFunction = new QuadraticEase() { EasingMode = EasingMode.EaseOut };
+                    setHeight.EasingFunction = new QuadraticEase() { EasingMode = EasingMode.EaseOut };
 
-                    RGBAreaBorder.BeginAnimation(FrameworkElement.WidthProperty, setWidth, HandoffBehavior.Compose);
+                    ColorAreaBorder.BeginAnimation(FrameworkElement.HeightProperty, setHeight, HandoffBehavior.Compose);
                 }
 
                 _settingSize = false;
@@ -200,9 +172,7 @@ namespace ColorPicker.Behaviors
             var height = (CaptureAreaBorder.ActualHeight - 6) * dpi.DpiScaleX;
 
             var color = _colorProvider.GetAverageColor(new System.Drawing.Rectangle((int)left, (int)top, (int)width, (int)height));
-            RTextBlock.Text = "R: " + color.R;
-            GTextBlock.Text = "G: " + color.G;
-            BTextBlock.Text = "B: " + color.B;
+            ColorTextBlock.Text = ColorFormatHelper.ColorToString(color, _userSettings.SelectedColorFormat.Value); ;
         }
 
         private void MouseInfoProvider_OnLeftMouseDown(object sender, System.Drawing.Point p)
@@ -210,11 +180,12 @@ namespace ColorPicker.Behaviors
             _corner = GetMousePositionScaled(_mouseInfoProvider.CurrentPosition);
             _dispatcherTimer.Stop();
 
-            SideBorderColumn.Width = new GridLength(0);
+            BottomBorderRow.Height = new GridLength(0);
 
             WindowHelper.SetPositionAndSize(AssociatedObject, _corner.X, _corner.Y, 0, 0);
             CaptureAreaBorder.Margin = new Thickness(0, 0, 0, 0);
-            RGBAreaBorder.Width = 0;
+            CaptureAreaBorder.HorizontalAlignment = HorizontalAlignment.Stretch;
+            ColorAreaBorder.Height = 0;
             _settingSize = true;
         }
 
@@ -231,7 +202,7 @@ namespace ColorPicker.Behaviors
                 CaptureAreaBorder.Width = double.NaN;
                 CaptureAreaBorder.Height = double.NaN;
                 AssociatedObject.SizeToContent = SizeToContent.Manual;
-                SideBorderColumn.Width = new GridLength(0);
+                BottomBorderRow.Height = new GridLength(0);
                 _dispatcherTimer.Stop();
             }
         }
