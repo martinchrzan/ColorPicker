@@ -14,8 +14,14 @@ namespace ColorPicker.Mouse
 
         event MouseUpEventHandler OnLeftMouseDown;
 
+        event MouseUpEventHandler OnLeftMouseUp;
+
         event MouseUpEventHandler OnRightMouseDown;
 
         System.Windows.Point CurrentPosition { get; }
+
+        void StopMonitoring();
+
+        void SetOriginalCursor();
     }
 }

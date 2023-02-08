@@ -1,4 +1,5 @@
-﻿using ColorPicker.Common;
+﻿using ColorMeter.Helpers;
+using ColorPicker.Common;
 using ColorPicker.Helpers;
 using ColorPicker.Keyboard;
 using ColorPicker.Mouse;
@@ -20,10 +21,13 @@ namespace ColorPicker.ViewModels
     {
         private string _colorString;
         private Brush _displayedColorBrush;
+        private readonly IMouseInfoProvider _mouseInfoProvider;
         private readonly ZoomWindowHelper _zoomWindowHelper;
         private readonly AppStateHandler _appStateHandler;
+        private readonly IColorProvider _colorProvider;
         private readonly IUserSettings _userSettings;
         private System.Drawing.Color _currentColor;
+        private bool _mouseDown;
 
         [ImportingConstructor]
         public MainViewModel(
@@ -32,14 +36,19 @@ namespace ColorPicker.ViewModels
             AppStateHandler appStateHandler, 
             KeyboardMonitor keyboardMonitor, 
             AppUpdateManager appUpdateManager,
-            IUserSettings userSettings)
+            IUserSettings userSettings,
+            IColorProvider colorProvider)
         {
+            _mouseInfoProvider = mouseInfoProvider;
             _zoomWindowHelper = zoomWindowHelper;
             _appStateHandler = appStateHandler;
             _userSettings = userSettings;
+            _colorProvider = colorProvider;
             mouseInfoProvider.MouseColorChanged += Mouse_ColorChanged;
             mouseInfoProvider.OnLeftMouseDown += MouseInfoProvider_OnLeftMouseDown;
+            mouseInfoProvider.OnLeftMouseUp += MouseInfoProvider_OnLeftMouseUp;
             mouseInfoProvider.OnRightMouseDown += MouseInfoProvider_OnRightMouseDown;
+            mouseInfoProvider.MousePositionChanged += MouseInfoProvider_MousePositionChanged;
             mouseInfoProvider.OnMouseWheel += MouseInfoProvider_OnMouseWheel;
 
             keyboardMonitor.Start();
@@ -97,7 +106,31 @@ namespace ColorPicker.ViewModels
             ColorString = ColorFormatHelper.ColorToString(color, _userSettings.SelectedColorFormat.Value);
             DisplayedColorBrush = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
         }
+
+        private void MouseInfoProvider_MousePositionChanged(object sender, Point e)
+        {
+            // show meter area only after we detected a movement
+            if (_mouseDown && !_appStateHandler.IsMeterAreaShown)
+            {
+                _mouseInfoProvider.SetOriginalCursor();
+                _appStateHandler.ShowMeterArea();
+            }
+            if (!_mouseDown && !_appStateHandler.IsMeterAreaShown)
+            {
+                _currentColor = _colorProvider.GetPixelColor(e);
+                ColorString = ColorFormatHelper.ColorToString(_currentColor, _userSettings.SelectedColorFormat.Value);
+                DisplayedColorBrush = new SolidColorBrush(Color.FromArgb(_currentColor.A, _currentColor.R, _currentColor.G, _currentColor.B));
+            }
+        }
+
         private void MouseInfoProvider_OnLeftMouseDown(object sender, System.Drawing.Point p)
+        {
+            _appStateHandler.HideColorPicker();
+            _appStateHandler.HideMeterArea();
+            _mouseDown = true;
+        }
+
+        private void MouseInfoProvider_OnLeftMouseUp(object sender, System.Drawing.Point p)
         {
             if (ColorString != null)
             {
@@ -105,7 +138,8 @@ namespace ColorPicker.ViewModels
                 _userSettings.AddColorIntoHistory(_currentColor);
             }
 
-            _appStateHandler.HideColorPicker();
+            _mouseDown = false;
+            _mouseInfoProvider.StopMonitoring();
         }
 
         private void MouseInfoProvider_OnRightMouseDown(object sender, System.Drawing.Point p)

@@ -1,8 +1,8 @@
 ﻿using ColorPicker.Helpers;
+using Microsoft.Xaml.Behaviors;
 using System;
 using System.Windows;
 using System.Windows.Forms;
-using System.Windows.Interactivity;
 
 namespace ColorPicker.Behaviors
 {

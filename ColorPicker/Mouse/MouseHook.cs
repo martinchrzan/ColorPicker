@@ -14,6 +14,7 @@ namespace ColorPicker.Mouse
     {
         private const int WH_MOUSE_LL = 14;
         private const int WM_LBUTTONDOWN = 0x0201;
+        private const int WM_LBUTTONUP = 0x0202;
         private const int WM_RBUTTONDOWN = 0x0204;
         private const int WM_RBUTTONUP = 0x0205;
         private const int WM_MOUSEWHEEL = 0x020A;
@@ -33,6 +34,21 @@ namespace ColorPicker.Mouse
             remove
             {
                 LeftMouseDown -= value;
+                Unsubscribe();
+            }
+        }
+
+        private event MouseUpEventHandler LeftMouseUp;
+        public event MouseUpEventHandler OnLeftMouseUp
+        {
+            add
+            {
+                Subscribe();
+                LeftMouseUp += value;
+            }
+            remove
+            {
+                LeftMouseUp -= value;
                 Unsubscribe();
             }
         }
@@ -105,6 +121,11 @@ namespace ColorPicker.Mouse
                 if (wParam.ToInt32() == WM_LBUTTONDOWN)
                 {
                     LeftMouseDown?.Invoke(null, new System.Drawing.Point(mouseHookStruct.pt.x, mouseHookStruct.pt.y));
+                    return new IntPtr(-1);
+                }
+                if (wParam.ToInt32() == WM_LBUTTONUP)
+                {
+                    LeftMouseUp?.Invoke(null, new System.Drawing.Point(mouseHookStruct.pt.x, mouseHookStruct.pt.y));
                     return new IntPtr(-1);
                 }
                 if (wParam.ToInt32() == WM_RBUTTONDOWN)
