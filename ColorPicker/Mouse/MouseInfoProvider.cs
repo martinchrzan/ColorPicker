@@ -14,7 +14,7 @@ namespace ColorPicker.Mouse
     [PartCreationPolicy(CreationPolicy.Shared)]
     public class MouseInfoProvider : IMouseInfoProvider
     {
-        private const int MousePullInfoIntervalInMs = 20;
+        private const int MousePullInfoIntervalInMs = 1;
         private readonly DispatcherTimer _timer = new DispatcherTimer();
         private readonly MouseHook _mouseHook;
         private readonly AppStateHandler _appStateMonitor;
