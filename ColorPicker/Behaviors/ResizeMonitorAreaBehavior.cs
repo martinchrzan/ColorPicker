@@ -7,18 +7,16 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
-using System.Windows.Threading;
 
 namespace ColorPicker.Behaviors
 {
     public class ResizeMonitorAreaBehavior : Behavior<Window>
     {
-        private const int MinHeight = 60;
+        private const int MinWidth = 60;
         private const int BottomBorderHeight = 30;
         private IMouseInfoProvider _mouseInfoProvider;
         private IColorProvider _colorProvider;
         private IUserSettings _userSettings;
-        private DispatcherTimer _dispatcherTimer = new DispatcherTimer();
         private Point _corner;
 
         public static DependencyProperty CaptureAreaBorderProperty = DependencyProperty.Register("CaptureAreaBorder", typeof(Border), typeof(ResizeMonitorAreaBehavior));
@@ -88,11 +86,21 @@ namespace ColorPicker.Behaviors
             AssociatedObject.Loaded += AssociatedObject_Loaded;
         }
 
+        private void setColor()
+        {
+            var dpi = MonitorResolutionHelper.GetCurrentMonitorDpi();
+            var left = (AssociatedObject.Left + 3) * dpi.DpiScaleX;
+            var top = (AssociatedObject.Top + 3) * dpi.DpiScaleX;
+            var width = (CaptureAreaBorder.ActualWidth - 6) * dpi.DpiScaleX;
+            var height = (CaptureAreaBorder.ActualHeight - 6) * dpi.DpiScaleX;
+
+            var color = _colorProvider.GetAverageColor(new System.Drawing.Rectangle((int)left, (int)top, (int)width, (int)height));
+            ColorTextBlock.Text = ColorFormatHelper.ColorToString(color, _userSettings.SelectedColorFormat.Value); ;
+        }
+
         private bool _settingSize = false;
         private void AssociatedObject_Loaded(object sender, RoutedEventArgs e)
         {
-            _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 50);
-            _dispatcherTimer.Tick += DispatcherTimer_Tick;
             _corner = GetMousePositionScaled(new Point(Math.Round(_mouseInfoProvider.CurrentPosition.X), Math.Round(_mouseInfoProvider.CurrentPosition.Y)));
 
             WindowHelper.SetPositionAndSize(AssociatedObject, _corner.X, _corner.Y, 0, 0);
@@ -105,15 +113,16 @@ namespace ColorPicker.Behaviors
                 {
                     CaptureAreaBorder.Width = AssociatedObject.Width;
                     CaptureAreaBorder.Height = AssociatedObject.Height;
+                    ColorAreaBorder.Width = double.NaN;
 
                     AssociatedObject.SizeToContent = SizeToContent.WidthAndHeight;
 
                     BottomBorderRow.Height = new GridLength(BottomBorderHeight);
 
-                    if (AssociatedObject.Height < MinHeight)
+                    if(AssociatedObject.Width < MinWidth)
                     {
-                        CaptureAreaBorder.Margin = new Thickness(0, 0, 0, MinHeight - AssociatedObject.Height);
-                        AssociatedObject.Height = MinHeight;
+                        CaptureAreaBorder.Margin = new Thickness(0, 0, MinWidth - AssociatedObject.Width, CaptureAreaBorder.Margin.Bottom);
+                        AssociatedObject.Width = MinWidth;
                     }
 
                     CaptureAreaBorder.HorizontalAlignment = HorizontalAlignment.Left;
@@ -122,7 +131,7 @@ namespace ColorPicker.Behaviors
                     setHeight.Completed += (s1, e1) =>
                     {
                         ColorAreaBorder.BeginAnimation(FrameworkElement.HeightProperty, null); ColorAreaBorder.Height = BottomBorderHeight;
-                        _dispatcherTimer.Start();
+                        setColor();
                     };
 
                     setHeight.EasingFunction = new QuadraticEase() { EasingMode = EasingMode.EaseOut };
@@ -163,22 +172,9 @@ namespace ColorPicker.Behaviors
             AssociatedObject.IsVisibleChanged += AssociatedObject_IsVisibleChanged;
         }
 
-        private void DispatcherTimer_Tick(object sender, EventArgs e)
-        {
-            var dpi = MonitorResolutionHelper.GetCurrentMonitorDpi();
-            var left = (AssociatedObject.Left + 3) * dpi.DpiScaleX;
-            var top = (AssociatedObject.Top + 3) * dpi.DpiScaleX;
-            var width = (CaptureAreaBorder.ActualWidth - 6) * dpi.DpiScaleX;
-            var height = (CaptureAreaBorder.ActualHeight - 6) * dpi.DpiScaleX;
-
-            var color = _colorProvider.GetAverageColor(new System.Drawing.Rectangle((int)left, (int)top, (int)width, (int)height));
-            ColorTextBlock.Text = ColorFormatHelper.ColorToString(color, _userSettings.SelectedColorFormat.Value); ;
-        }
-
         private void MouseInfoProvider_OnLeftMouseDown(object sender, System.Drawing.Point p)
         {
             _corner = GetMousePositionScaled(_mouseInfoProvider.CurrentPosition);
-            _dispatcherTimer.Stop();
 
             BottomBorderRow.Height = new GridLength(0);
 
@@ -186,6 +182,7 @@ namespace ColorPicker.Behaviors
             CaptureAreaBorder.Margin = new Thickness(0, 0, 0, 0);
             CaptureAreaBorder.HorizontalAlignment = HorizontalAlignment.Stretch;
             ColorAreaBorder.Height = 0;
+      
             _settingSize = true;
         }
 
@@ -202,8 +199,9 @@ namespace ColorPicker.Behaviors
                 CaptureAreaBorder.Width = double.NaN;
                 CaptureAreaBorder.Height = double.NaN;
                 AssociatedObject.SizeToContent = SizeToContent.Manual;
+                AssociatedObject.Width = 0; 
+                AssociatedObject.Height = 0;
                 BottomBorderRow.Height = new GridLength(0);
-                _dispatcherTimer.Stop();
             }
         }
 

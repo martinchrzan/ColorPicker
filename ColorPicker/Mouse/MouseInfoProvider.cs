@@ -23,6 +23,7 @@ namespace ColorPicker.Mouse
         private System.Windows.Point _previousMousePosition = new System.Windows.Point(-1, 1);
         private Color _previousColor = Color.Transparent;
         private bool _colorFormatChanged = false;
+        private bool _eventsSubscribed = false;
 
         [ImportingConstructor]
         public MouseInfoProvider(AppStateHandler appStateMonitor, IUserSettings userSettings, IColorProvider colorProvider)
@@ -114,12 +115,16 @@ namespace ColorPicker.Mouse
                 _timer.Start();
             }
 
-            _mouseHook.OnLeftMouseDown += MouseHook_OnLeftMouseDown;
-            _mouseHook.OnLeftMouseUp += MouseHook_OnLeftMouseUp;
-            _mouseHook.OnRightMouseDown += MouseHook_OnRightMouseDown;
-            _mouseHook.OnMouseWheel += MouseHook_OnMouseWheel;
+            if(!_eventsSubscribed)
+            {
+                _mouseHook.OnLeftMouseDown += MouseHook_OnLeftMouseDown;
+                _mouseHook.OnLeftMouseUp += MouseHook_OnLeftMouseUp;
+                _mouseHook.OnRightMouseDown += MouseHook_OnRightMouseDown;
+                _mouseHook.OnMouseWheel += MouseHook_OnMouseWheel;
+                _eventsSubscribed = true;
+            }
 
-            if (_userSettings.ChangeCursor.Value)
+            if (_userSettings.ChangeCursor.Value && e != WindowType.ColorMeter)
             {
                 CursorManager.SetColorPickerCursor();
             }
@@ -170,6 +175,8 @@ namespace ColorPicker.Mouse
             _mouseHook.OnLeftMouseUp -= MouseHook_OnLeftMouseUp;
             _mouseHook.OnRightMouseDown -= MouseHook_OnRightMouseDown;
             _mouseHook.OnMouseWheel -= MouseHook_OnMouseWheel;
+
+            _eventsSubscribed = false;
 
             if (_userSettings.ChangeCursor.Value)
             {

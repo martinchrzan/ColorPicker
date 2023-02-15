@@ -92,6 +92,7 @@ namespace ColorPicker.Keyboard
                 _colorsHistoryWindowHelper.HideColorsHistory();
                 _zoomWindowHelper.CloseZoomWindow();
                 _appStateHandler.HideMeterArea();
+                _appStateHandler.HideColorPicker();
             }
         }
 
