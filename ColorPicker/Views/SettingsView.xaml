@@ -64,7 +64,7 @@
                         Project website
                     </Hyperlink>
                     </TextBlock>
-                    <TextBlock Style="{StaticResource NormalTextBlock}" HorizontalAlignment="Right" Text="Martin Chrzan © 2020-2021" FontWeight="Light"/>
+                    <TextBlock Style="{StaticResource NormalTextBlock}" HorizontalAlignment="Right" Text="Martin Chrzan © 2020-2023" FontWeight="Light"/>
                 </StackPanel>
             </Grid>
            
