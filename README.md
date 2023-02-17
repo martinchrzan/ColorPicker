@@ -12,6 +12,8 @@ Simple and quick system-wide color picker. Pick colors from any currently runnin
 
 **To open Colors History Palette** - *Right mouse click while Color Picker opened* - holds up to 10 previously copied colors
 
+**To get an average color in a selected area** - *Left and hold mouse click while Color Picker opened* - select the area - color is copied on the left mouse button released
+
 [**Download the latest release here**](https://github.com/martinchrzan/ColorPicker/releases/latest)
 
 **Color picking**
@@ -22,7 +24,7 @@ Simple and quick system-wide color picker. Pick colors from any currently runnin
 ![](ColorsHistory.gif)
 
 
-**Average color in the area**
+**Average color of the area**
 ![](colorMeter.gif)
 
 Currently supported color formats and their string representation:
