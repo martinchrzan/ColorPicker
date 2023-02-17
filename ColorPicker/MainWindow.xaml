@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ColorPicker"
-        xmlns:e="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:e="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:behaviors="clr-namespace:ColorPicker.Behaviors"
         mc:Ignorable="d"
         Title="Color Picker" Height="35" SizeToContent="Width" WindowStyle="None" Opacity="0.01" ShowInTaskbar="False" ResizeMode="NoResize" Topmost="True" Background="Transparent" AllowsTransparency="True">

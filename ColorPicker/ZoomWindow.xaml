@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ColorPicker"
         mc:Ignorable="d"
-        xmlns:e="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:e="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:behaviors="clr-namespace:ColorPicker.Behaviors"
         Title="Zoom window" WindowStyle="None" SizeToContent="WidthAndHeight" Topmost="True" ShowInTaskbar="False" ResizeMode="NoResize" Focusable="False">
     <e:Interaction.Behaviors>

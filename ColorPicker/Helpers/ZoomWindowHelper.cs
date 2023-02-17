@@ -38,7 +38,7 @@ namespace ColorPicker.Helpers
             _appStateHandler = appStateHandler;
             _throttledActionInvoker = throttledActionInvoker;
             _appStateHandler.AppClosed += AppStateHandler_AppClosed;
-            _appStateHandler.AppHidden += AppStateHandler_AppClosed;
+            _appStateHandler.AppHidden += AppSateHandler_AppHidden;
         }
 
         public void Zoom(System.Windows.Point position, bool zoomIn)
@@ -190,6 +190,11 @@ namespace ColorPicker.Helpers
             // need to call it again at load time, because it does was not dpi aware at the first time of Show() call
             _zoomWindow.Left = _lastLeft;
             _zoomWindow.Top = _lastTop;
+        }
+
+        private void AppSateHandler_AppHidden(object sender, WindowType type)
+        {
+            CloseZoomWindow();
         }
 
         private void AppStateHandler_AppClosed(object sender, EventArgs e)

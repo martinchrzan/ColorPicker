@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -32,8 +31,19 @@ namespace ColorPicker.Helpers
             Name = new string(info.szDevice).TrimEnd((char)0);
         }
 
-        public static DpiScale GetCurrentMonitorDpi()
+        public static DpiScale GetCurrentMonitorDpi(string windowTag = null)
         {
+            if (!string.IsNullOrEmpty(windowTag))
+            {
+                foreach (Window window in Application.Current.Windows)
+                {
+
+                    if (window.Tag?.ToString() == windowTag)
+                    {
+                        return VisualTreeHelper.GetDpi(window);
+                    }
+                }
+            }
             return VisualTreeHelper.GetDpi(Application.Current.MainWindow);
         }
 
