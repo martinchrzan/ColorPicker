@@ -14,10 +14,16 @@ Simple and quick system-wide color picker. Pick colors from any currently runnin
 
 [**Download the latest release here**](https://github.com/martinchrzan/ColorPicker/releases/latest)
 
+**Color picking**
 ![](showcase.gif)
 
+
+**Color history**
 ![](ColorsHistory.gif)
 
+
+**Average color in the area**
+![](colorMeter.gif)
 
 Currently supported color formats and their string representation:
 - **HEX** - *#292929*
@@ -28,6 +34,7 @@ Currently supported color formats and their string representation:
 
 ## Differences from the implementation in PowerToys
 - different set of color formats, vec4 is only here, however there are some missing
+- color meter feature (average color of an area)
 - quick colors history palette
 - different design
 - no telemetry
