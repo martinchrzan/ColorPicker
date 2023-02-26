@@ -34,7 +34,7 @@
             <Rectangle Height="1" Fill="DarkGray" Margin="5"/>
             <WrapPanel>
                 <TextBlock VerticalAlignment="Center" Style="{StaticResource NormalTextBlock}" FontWeight="Light" Margin="7" Text="Copied color format:"/>
-                <ComboBox Margin="5" SelectedItem="{Binding SelectedColorFormat}" ItemsSource="{Binding Source={StaticResource colorFormat}}" Width="90"/>
+                <ComboBox Margin="5" SelectedItem="{Binding SelectedColorFormat}" ItemsSource="{Binding Source={StaticResource colorFormat}}"/>
             </WrapPanel>
 
             <Rectangle Height="1" Fill="DarkGray" Margin="5"/>

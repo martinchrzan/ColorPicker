@@ -33,9 +33,12 @@ Currently supported color formats and their string representation:
 - **HSL** - *hsl(0, 0%, 12%)* 
 - **HSV** - *hsv(0, 0, 12)*
 - **VEC4** - *vec4(0.122, 0.122, 0.122, 1)*
+- **RGB565** - *#4C8A*
+- **DecimalBE (Big-endian)** - *2114460*
+- **DecimalLE (Little-endian)** - *1213756*
 
 ## Differences from the implementation in PowerToys
-- different set of color formats, vec4 is only here, however there are some missing
+- different set of supported color formats
 - color meter feature (average color of an area)
 - quick colors history palette
 - different design

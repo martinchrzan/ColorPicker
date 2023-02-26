@@ -7,12 +7,9 @@ using ColorPicker.Settings;
 using ColorPicker.ViewModelContracts;
 using System;
 using System.ComponentModel.Composition;
-using System.Globalization;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace ColorPicker.ViewModels
 {
