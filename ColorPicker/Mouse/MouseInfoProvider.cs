@@ -115,7 +115,7 @@ namespace ColorPicker.Mouse
                 _timer.Start();
             }
 
-            if(!_eventsSubscribed)
+            if (!_eventsSubscribed)
             {
                 _mouseHook.OnLeftMouseDown += MouseHook_OnLeftMouseDown;
                 _mouseHook.OnLeftMouseUp += MouseHook_OnLeftMouseUp;
@@ -138,7 +138,7 @@ namespace ColorPicker.Mouse
 
         private void MouseHook_OnMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            if(e.Delta == 0)
+            if (e.Delta == 0)
             {
                 return;
             }
@@ -169,7 +169,7 @@ namespace ColorPicker.Mouse
             {
                 _timer.Stop();
             }
-            
+
             _previousMousePosition = new System.Windows.Point(-1, 1);
             _mouseHook.OnLeftMouseDown -= MouseHook_OnLeftMouseDown;
             _mouseHook.OnLeftMouseUp -= MouseHook_OnLeftMouseUp;

@@ -59,7 +59,7 @@ namespace ColorPicker.ViewModels
             set
             {
                 // only set value if registry save successful 
-                if(RegistryHelper.SetRunOnStartup(value))
+                if (RegistryHelper.SetRunOnStartup(value))
                 {
                     _userSettings.RunOnStartup.Value = value;
                     OnPropertyChanged();
@@ -157,12 +157,25 @@ namespace ColorPicker.ViewModels
             }
         }
 
+        public bool ShowColorName
+        {
+            get
+            {
+                return _userSettings.ShowColorName.Value;
+            }
+            set
+            {
+                _userSettings.ShowColorName.Value = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string ApplicationVersion { get { return Assembly.GetExecutingAssembly().GetName().Version.ToString(); } }
 
         public ICommand ChangeShortcutCommand { get; }
-        
+
         public ICommand CheckForUpdatesCommand { get; }
-        
+
         public ICommand ConfirmShortcutCommand { get; }
 
         public ICommand CancelShortcutCommand { get; }

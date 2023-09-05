@@ -1,4 +1,5 @@
-﻿using ColorPicker.Helpers;
+﻿using ColorName;
+using ColorPicker.Helpers;
 using ColorPicker.Settings;
 using System;
 using System.Collections.ObjectModel;
@@ -28,7 +29,7 @@ namespace ColorPicker.Controls
         public static readonly DependencyProperty CentralItemProperty =
             DependencyProperty.Register("CentralItem", typeof(CircularMenuCentralItem), typeof(CircularMenu),
             new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
-        
+
 
         public CircularMenuCentralItem CentralItem
         {
@@ -57,7 +58,7 @@ namespace ColorPicker.Controls
         private void Items_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             var newItem = e.NewItems[0] as CircularMenuItem;
-            if(newItem != null)
+            if (newItem != null)
             {
                 if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
                 {
@@ -72,10 +73,11 @@ namespace ColorPicker.Controls
                     newItem.PreviewMouseDown -= CircularMenuItem_MouseDown;
                 }
             }
-            
-            if(Items?.Count > 0)
+
+            if (Items?.Count > 0)
             {
                 CentralItem.ContentText = string.Empty;
+                CentralItem.ColorName = string.Empty;
             }
         }
 
@@ -92,16 +94,29 @@ namespace ColorPicker.Controls
         private void CircularMenuItem_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             CentralItem.ContentText = string.Empty;
+            CentralItem.ColorName = string.Empty;
         }
 
         private void CircularMenuItem_MouseEnter(object sender, EventArgs e)
         {
-            if(_userSettings == null)
+            if (_userSettings == null)
             {
                 _userSettings = Bootstrapper.Container.GetExportedValue<IUserSettings>();
             }
-            
+
             var color = (sender as CircularMenuItem).Color;
+
+            if (_userSettings.ShowColorName.Value)
+            {
+                var colorName = _userSettings.ShowColorName.Value ? ColorNameProvider.GetColorNameFromRGB(color.R, color.G, color.B).colorName : "";
+                CentralItem.ColorName = colorName;
+                CentralItem.IsColorNameVisible = true;
+            }
+            else
+            {
+                CentralItem.IsColorNameVisible = false;
+            }
+
             CentralItem.ContentText = ColorFormatHelper.ColorToString(color, _userSettings.SelectedColorFormat.Value);
         }
 

@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Drawing;
-using Windows.Media.Devices;
 
 namespace ColorPicker.Settings
 {
@@ -23,6 +22,7 @@ namespace ColorPicker.Settings
             AutomaticUpdates = new SettingItem<bool>(settings.AutomaticUpdates, (currentValue) => { settings.AutomaticUpdates = currentValue; SaveSettings(); });
             ActivationShortcut = new SettingItem<string>(settings.ActivationShortcut, (currentValue) => { settings.ActivationShortcut = currentValue; SaveSettings(); });
             ChangeCursor = new SettingItem<bool>(settings.ChangeCursorWhenPickingColor, (currentValue) => { settings.ChangeCursorWhenPickingColor = currentValue; SaveSettings(); });
+            ShowColorName = new SettingItem<bool>(settings.ShowColorName, (currentValue) => { settings.ShowColorName = currentValue; SaveSettings(); });
             SelectedColorFormat = new SettingItem<ColorFormat>((ColorFormat)Enum.Parse(typeof(ColorFormat), settings.SelectedColorFormat, true), (currentValue) => { settings.SelectedColorFormat = currentValue.ToString(); SaveSettings(); });
             LoadColorsHistory();
         }
@@ -34,6 +34,8 @@ namespace ColorPicker.Settings
         public SettingItem<string> ActivationShortcut { get; }
 
         public SettingItem<bool> ChangeCursor { get; }
+
+        public SettingItem<bool> ShowColorName { get; }
 
         public SettingItem<ColorFormat> SelectedColorFormat { get; }
 

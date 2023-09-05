@@ -132,7 +132,10 @@
                 <ControlTemplate TargetType="controls:CircularMenuCentralItem">
                     <Grid>
                         <Ellipse UseLayoutRounding="True" Stroke="White" StrokeThickness="4" Fill="{StaticResource CenterGradientColor}"/>
-                        <TextBlock Text="{TemplateBinding ContentText}" Foreground="White" FontSize="16" FontWeight="Light" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Margin="5" Text="{TemplateBinding ContentText}" Foreground="White" FontSize="16" FontWeight="Light" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <TextBlock Margin="5" Text="{TemplateBinding ColorName}" Visibility="{TemplateBinding IsColorNameVisible,  Converter={StaticResource bool2VisibilityConverter}}" Foreground="White" FontSize="15" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" />
+                        </StackPanel>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

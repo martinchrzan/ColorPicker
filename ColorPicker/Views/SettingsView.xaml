@@ -31,6 +31,8 @@
             <CheckBox Margin="5,0" IsChecked="{Binding RunOnStartup}" FontWeight="Light" Content="Run on startup"/>
             <CheckBox Margin="5,0" IsChecked="{Binding AutomaticUpdates}" FontWeight="Light" Content="Automatic updates"/>
             <CheckBox Margin="5,0" IsChecked="{Binding ChangeCursorWhenPickingColor}" FontWeight="Light" Content="Change cursor when picking a color"/>
+            <CheckBox Margin="5,0" IsChecked="{Binding ShowColorName}" FontWeight="Light" Content="Show color name"/>
+
             <Rectangle Height="1" Fill="DarkGray" Margin="5"/>
             <WrapPanel>
                 <TextBlock VerticalAlignment="Center" Style="{StaticResource NormalTextBlock}" FontWeight="Light" Margin="7" Text="Copied color format:"/>

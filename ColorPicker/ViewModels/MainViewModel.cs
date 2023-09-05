@@ -1,4 +1,5 @@
 ﻿using ColorMeter.Helpers;
+using ColorName;
 using ColorPicker.Common;
 using ColorPicker.Helpers;
 using ColorPicker.Keyboard;
@@ -28,10 +29,10 @@ namespace ColorPicker.ViewModels
 
         [ImportingConstructor]
         public MainViewModel(
-            IMouseInfoProvider mouseInfoProvider, 
-            ZoomWindowHelper zoomWindowHelper, 
-            AppStateHandler appStateHandler, 
-            KeyboardMonitor keyboardMonitor, 
+            IMouseInfoProvider mouseInfoProvider,
+            ZoomWindowHelper zoomWindowHelper,
+            AppStateHandler appStateHandler,
+            KeyboardMonitor keyboardMonitor,
             AppUpdateManager appUpdateManager,
             IUserSettings userSettings,
             IColorProvider colorProvider)
@@ -49,10 +50,10 @@ namespace ColorPicker.ViewModels
             mouseInfoProvider.OnMouseWheel += MouseInfoProvider_OnMouseWheel;
 
             keyboardMonitor.Start();
-            
-            #if !DEBUG
+
+#if !DEBUG
             CheckForUpdates(appUpdateManager, userSettings);
-            #endif
+#endif
         }
 
         private static void CheckForUpdates(AppUpdateManager appUpdateManager, IUserSettings userSettings)
@@ -75,6 +76,10 @@ namespace ColorPicker.ViewModels
         {
             get
             {
+                if (_userSettings.ShowColorName.Value)
+                {
+                    return $"{_colorString} - {ColorNameProvider.GetColorNameFromRGB(_currentColor.R, _currentColor.G, _currentColor.B).colorName}";
+                }
                 return _colorString;
             }
             set

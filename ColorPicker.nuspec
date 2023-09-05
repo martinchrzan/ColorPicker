@@ -2,14 +2,14 @@
 <package>
   <metadata>
     <id>ColorPicker</id>
-    <version>1.2.1</version>
+    <version>1.3.0</version>
     <authors>Martin Chrzan</authors>
     <owners>Martin Chrzan</owners>
     <licenseUrl>https://github.com/martinchrzan/ColorPicker/blob/master/LICENSE</licenseUrl>
     <projectUrl>http://github.com/martinchrzan/ColorPicker</projectUrl>
     <!--<iconUrl></iconUrl>-->
     <releaseNotes>
-       Added new color formats - RGB565, decimal big-endian, decimal little-endian
+       Show name of a color - you can enable this functionality in settings
     </releaseNotes>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Color Picker</description>

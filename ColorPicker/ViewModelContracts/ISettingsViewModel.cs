@@ -13,6 +13,8 @@ namespace ColorPicker.ViewModelContracts
 
         bool ChangeCursorWhenPickingColor { get; set; }
 
+        bool ShowColorName { get; set; }
+
         string ShortCut { get; }
 
         string ShortCutPreview { get; set; }
@@ -20,7 +22,7 @@ namespace ColorPicker.ViewModelContracts
         string ApplicationVersion { get; }
 
         ColorFormat SelectedColorFormat { get; }
-        
+
         bool CheckingForUpdateInProgress { get; }
 
         ICommand ChangeShortcutCommand { get; }
