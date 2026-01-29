@@ -258,7 +258,7 @@
       <Version>0.9.6</Version>
     </PackageReference>
     <PackageReference Include="NuGet.CommandLine">
-      <Version>5.11.5</Version>
+      <Version>5.11.6</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

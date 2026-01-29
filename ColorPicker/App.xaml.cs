@@ -43,15 +43,22 @@ namespace ColorPicker
                 return;
             }
 
-            using (var mgr = new UpdateManager(""))
+            try
             {
-                // Note, in most of these scenarios, the app exits after this method
-                // completes!
-                SquirrelAwareApp.HandleEvents(
-                  onInitialInstall: v => mgr.CreateShortcutForThisExe(),
-                  onAppUpdate: v => mgr.CreateShortcutForThisExe(),
-                  onAppUninstall: v => mgr.RemoveShortcutForThisExe(),
-                  onFirstRun: () => ShowWelcome());
+                using (var mgr = new UpdateManager(""))
+                {
+                    // Note, in most of these scenarios, the app exits after this method
+                    // completes!
+                    SquirrelAwareApp.HandleEvents(
+                      onInitialInstall: v => mgr.CreateShortcutForThisExe(),
+                      onAppUpdate: v => mgr.CreateShortcutForThisExe(),
+                      onAppUninstall: v => mgr.RemoveShortcutForThisExe(),
+                      onFirstRun: () => ShowWelcome());
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError("Squirrel update error", ex);
             }
 
             base.OnStartup(e);
