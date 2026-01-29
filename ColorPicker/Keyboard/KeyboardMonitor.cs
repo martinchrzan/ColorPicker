@@ -1,4 +1,5 @@
 ﻿using ColorPicker.Helpers;
+using ColorPicker.Mouse;
 using ColorPicker.Settings;
 using System;
 using System.Collections.Generic;
@@ -20,14 +21,17 @@ namespace ColorPicker.Keyboard
         private List<int> _currentlyPressedKeys = new List<int>();
         private List<int> _activationKeys = new List<int>();
         private GlobalKeyboardHook _keyboardHook;
+        private readonly IMouseInfoProvider _mouseInfoProvider;
+
 
         [ImportingConstructor]
-        public KeyboardMonitor(AppStateHandler appStateHandler, IUserSettings userSettings, ColorsHistoryWindowHelper colorsHistoryWindowHelper, ZoomWindowHelper zoomWindowHelper)
+        public KeyboardMonitor(AppStateHandler appStateHandler, IUserSettings userSettings, ColorsHistoryWindowHelper colorsHistoryWindowHelper, ZoomWindowHelper zoomWindowHelper, IMouseInfoProvider mouseInfoProvider )
         {
             _appStateHandler = appStateHandler;
             _userSettings = userSettings;
             _colorsHistoryWindowHelper = colorsHistoryWindowHelper;
             _zoomWindowHelper = zoomWindowHelper;
+            _mouseInfoProvider = mouseInfoProvider;
             _userSettings.ActivationShortcut.PropertyChanged += ActivationShortcut_PropertyChanged;
             SetActivationKeys();
         }
@@ -93,6 +97,7 @@ namespace ColorPicker.Keyboard
                 _zoomWindowHelper.CloseZoomWindow();
                 _appStateHandler.HideMeterArea();
                 _appStateHandler.HideColorPicker();
+                _mouseInfoProvider.SetOriginalCursor();
             }
         }
 
