@@ -53,10 +53,15 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
                 
-                <Button Margin="5,-8,0,0" Grid.ColumnSpan="2" Content="Check for updates" FontWeight="Light" FontSize="13"  Command="{Binding CheckForUpdatesCommand}"/>
-
-                <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Margin="0,5,5,0">
+                <Button Margin="5,8,0,0" Grid.ColumnSpan="2" Content="Check for updates" FontWeight="Light" FontSize="13"  Command="{Binding CheckForUpdatesCommand}"/>
+                <Button Grid.Row="1" Margin="5,8,0,0" Content="Show logs" FontWeight="Light" FontSize="12" Command="{Binding OpenLogsCommand}"/>
+                
+                <StackPanel Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="0,5,5,0">
                     <TextBlock Style="{StaticResource NormalTextBlock}" Margin="5,10,0,0" FontWeight="SemiBold" Text="{Binding ApplicationVersion, StringFormat={}Version: {0}}" HorizontalAlignment="Right"/>
                     <TextBlock Style="{StaticResource NormalTextBlock}" HorizontalAlignment="Right">           
                     <Hyperlink NavigateUri="http://www.github.com/martinchrzan/ColorPicker">
@@ -66,13 +71,13 @@
                         Project website
                     </Hyperlink>
                     </TextBlock>
-                    <TextBlock Style="{StaticResource NormalTextBlock}" HorizontalAlignment="Right" Text="Martin Chrzan © 2020-2023" FontWeight="Light"/>
+                    <TextBlock Style="{StaticResource NormalTextBlock}" HorizontalAlignment="Right" Text="Martin Chrzan © 2020-2026" FontWeight="Light"/>
                 </StackPanel>
             </Grid>
            
         </StackPanel>
 
-        <Border Background="{DynamicResource SystemControlBackgroundAltHighBrush}" Visibility="{Binding ShowingKeyboardCaptureOverlay, Converter={StaticResource bool2VisibilityConverter}}">
+        <!--<Border Background="{DynamicResource SystemControlBackgroundAltHighBrush}" Visibility="{Binding ShowingKeyboardCaptureOverlay, Converter={StaticResource bool2VisibilityConverter}}">
             <StackPanel VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource NormalTextBlock}" Text="Press keys" FontSize="15" FontWeight="Light" Margin="0,0" HorizontalAlignment="Center"/>
                 <TextBlock Style="{StaticResource NormalTextBlock}" Text="{Binding ShortCutPreview}" FontSize="16" FontWeight="Bold" Margin="0,15" HorizontalAlignment="Center"/>
@@ -81,11 +86,11 @@
                     <Button Content="OK" Command="{Binding ConfirmShortcutCommand}" Margin="10,0" HorizontalAlignment="Center" Width="100"/>
                 </WrapPanel>
             </StackPanel>
-        </Border>
+        </Border>-->
 
-        <Border Background="{DynamicResource SystemControlBackgroundAltHighBrush}" Visibility="{Binding CheckingForUpdateInProgress, Converter={StaticResource bool2VisibilityConverter}}">
+        <!--<Border Background="{DynamicResource SystemControlBackgroundAltHighBrush}" Visibility="{Binding CheckingForUpdateInProgress, Converter={StaticResource bool2VisibilityConverter}}">
             <TextBlock Style="{StaticResource NormalTextBlock}" Text="Checking for updates" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Light"/>
-        </Border>
+        </Border>-->
 
         <Border BorderThickness="4,0,4,0" BorderBrush="#505050"/>
     </Grid>

@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace ColorPicker.Settings
 {
-    public enum ColorFormat { hex, rgb, hsl, hsv, vec4, rgb565, decimalBE, decimalLE };
+    public enum ColorFormat { hex, rgb, hsl, hsv, vec4, rgb565, decimalBE, decimalLE, hct, srgbLinear };
 
     public interface IUserSettings
     {

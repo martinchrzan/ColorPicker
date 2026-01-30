@@ -2,7 +2,10 @@
 using ColorPicker.Helpers;
 using ColorPicker.Settings;
 using ColorPicker.ViewModelContracts;
+using System;
 using System.ComponentModel.Composition;
+using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using System.Windows.Input;
 
@@ -44,6 +47,12 @@ namespace ColorPicker.ViewModels
                 }
 
                 CheckingForUpdateInProgress = false;
+            });
+
+            OpenLogsCommand = new RelayCommand(()=>
+            {
+                string logsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ColorPicker");
+                Process.Start(new ProcessStartInfo { FileName = logsPath, UseShellExecute = true });
             });
 
             _userSettings = userSettings;
@@ -179,5 +188,7 @@ namespace ColorPicker.ViewModels
         public ICommand ConfirmShortcutCommand { get; }
 
         public ICommand CancelShortcutCommand { get; }
+
+        public ICommand OpenLogsCommand { get; }
     }
 }

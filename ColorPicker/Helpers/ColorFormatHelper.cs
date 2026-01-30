@@ -28,6 +28,10 @@ namespace ColorPicker.Helpers
                     return ColorToDecimalLE(c);
                 case ColorFormat.decimalBE:
                     return ColorToDecimalBE(c);
+                case ColorFormat.hct:
+                    return ColorToHct(c);
+                case ColorFormat.srgbLinear:
+                    return ColorToSrgbLinear(c);
                 default:
                     return string.Empty;
             }
@@ -93,6 +97,71 @@ namespace ColorPicker.Helpers
         private static string ColorToVec4(System.Drawing.Color c)
         {
             return string.Format("vec4({0}, {1}, {2}, 1)", Math.Round(c.R / 255f, 3), Math.Round(c.G / 255f, 3), Math.Round(c.B / 255f, 3));
+        }
+
+        private static string ColorToHct(System.Drawing.Color c)
+        {
+            var hct = RgbToHct(c.R, c.G, c.B);
+            return "hct(" + Math.Round(hct.H) + ", " + Math.Round(hct.C) + ", " + Math.Round(hct.T) + ")";
+        }
+
+        private static string ColorToSrgbLinear(System.Drawing.Color c)
+        {
+            double rLinear = Linearize(c.R / 255.0);
+            double gLinear = Linearize(c.G / 255.0);
+            double bLinear = Linearize(c.B / 255.0);
+            return string.Format("srgb-linear({0}, {1}, {2})", Math.Round(rLinear, 3), Math.Round(gLinear, 3), Math.Round(bLinear, 3));
+        }
+
+        private struct Hct
+        {
+            public double H { get; set; }
+            public double C { get; set; }
+            public double T { get; set; }
+        }
+
+        private static Hct RgbToHct(int r, int g, int b)
+        {
+            // Convert RGB to linear sRGB
+            double rLinear = Linearize(r / 255.0);
+            double gLinear = Linearize(g / 255.0);
+            double bLinear = Linearize(b / 255.0);
+
+            // Convert linear sRGB to XYZ
+            double x = (0.4124564 * rLinear + 0.3575761 * gLinear + 0.1804375 * bLinear);
+            double y = (0.2126729 * rLinear + 0.7151522 * gLinear + 0.0721750 * bLinear);
+            double z = (0.0193339 * rLinear + 0.1191920 * gLinear + 0.9503041 * bLinear);
+
+            // Convert XYZ to LAB
+            double l = 116.0 * LabF(y / 1.0) - 16.0;
+            double a = 500.0 * (LabF(x / 0.95047) - LabF(y / 1.0));
+            double b_ = 200.0 * (LabF(y / 1.0) - LabF(z / 1.08883));
+
+            // Convert LAB to LCH (Lch)
+            double c = Math.Sqrt(a * a + b_ * b_);
+            double h = Math.Atan2(b_, a) * (180.0 / Math.PI);
+            if (h < 0)
+                h += 360;
+
+            // In HCT, T (tone) is derived from L (lightness)
+            double t = l;
+
+            return new Hct { H = h, C = c, T = t };
+        }
+
+        private static double Linearize(double value)
+        {
+            if (value <= 0.04045)
+                return value / 12.92;
+            return Math.Pow((value + 0.055) / 1.055, 2.4);
+        }
+
+        private static double LabF(double t)
+        {
+            double delta = 6.0 / 29.0;
+            if (t > delta * delta * delta)
+                return Math.Pow(t, 1.0 / 3.0);
+            return t / (3.0 * delta * delta) + 4.0 / 29.0;
         }
     }
 }

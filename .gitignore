@@ -261,3 +261,4 @@ __pycache__/
 *.pyc
 Stage/
 *.ods#
+/ColorPicker/output
