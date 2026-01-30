@@ -36,6 +36,8 @@ Currently supported color formats and their string representation:
 - **RGB565** - *#4C8A*
 - **DecimalBE (Big-endian)** - *2114460*
 - **DecimalLE (Little-endian)** - *1213756*
+- **HCT** - *hct(44, 43, 32)*
+- **sRGB Linear** - *srgb-linear(0.117, 0.44, 0.871)*
 
 ## Differences from the implementation in PowerToys
 - different set of supported color formats
