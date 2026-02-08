@@ -38,7 +38,9 @@ Currently supported color formats and their string representation:
 - **DecimalLE (Little-endian)** - *1213756*
 - **HCT** - *hct(44, 43, 32)*
 - **sRGB Linear** - *srgb-linear(0.117, 0.44, 0.871)*
-
+- **oklch** - *oklch(0.235 0.021 200)*
+- **oklab** - *oklab(0.235 -0.001 0)*
+  
 ## Differences from the implementation in PowerToys
 - different set of supported color formats
 - color meter feature (average color of an area)
