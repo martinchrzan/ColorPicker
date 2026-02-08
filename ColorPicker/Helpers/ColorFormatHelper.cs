@@ -32,6 +32,10 @@ namespace ColorPicker.Helpers
                     return ColorToHct(c);
                 case ColorFormat.srgbLinear:
                     return ColorToSrgbLinear(c);
+                case ColorFormat.oklab:
+                    return ColorToOklab(c);
+                case ColorFormat.oklch:
+                    return ColorToOklch(c);
                 default:
                     return string.Empty;
             }
@@ -113,11 +117,78 @@ namespace ColorPicker.Helpers
             return string.Format("srgb-linear({0}, {1}, {2})", Math.Round(rLinear, 3), Math.Round(gLinear, 3), Math.Round(bLinear, 3));
         }
 
+        private static string ColorToOklab(System.Drawing.Color c)
+        {
+            var oklab = RgbToOklab(c.R, c.G, c.B);
+            return "oklab(" + Math.Round(oklab.L, 3) + " " + Math.Round(oklab.A, 3) + " " + Math.Round(oklab.B, 3) + ")";
+        }
+
+        private static string ColorToOklch(System.Drawing.Color c)
+        {
+            var oklch = RgbToOklch(c.R, c.G, c.B);
+            return "oklch(" + Math.Round(oklch.L, 3) + " " + Math.Round(oklch.C, 3) + " " + Math.Round(oklch.H) + ")";
+        }
+
         private struct Hct
         {
             public double H { get; set; }
             public double C { get; set; }
             public double T { get; set; }
+        }
+
+        private struct Oklab
+        {
+            public double L { get; set; }
+            public double A { get; set; }
+            public double B { get; set; }
+        }
+
+        private struct Oklch
+        {
+            public double L { get; set; }
+            public double C { get; set; }
+            public double H { get; set; }
+        }
+
+        private static Oklab RgbToOklab(int r, int g, int b)
+        {
+            // Convert RGB to linear sRGB
+            double rLinear = Linearize(r / 255.0);
+            double gLinear = Linearize(g / 255.0);
+            double bLinear = Linearize(b / 255.0);
+
+            // Convert linear sRGB to LMS
+            double l = 0.4122214708 * rLinear + 0.5310886647 * gLinear + 0.0514459929 * bLinear;
+            double m = 0.2119034982 * rLinear + 0.6807612419 * gLinear + 0.1073790969 * bLinear;
+            double s = 0.0883024619 * rLinear + 0.0853627145 * gLinear + 0.8301696423 * bLinear;
+
+            // Convert LMS to Oklab
+            double l_ = Math.Pow(l, 1.0 / 3.0);
+            double m_ = Math.Pow(m, 1.0 / 3.0);
+            double s_ = Math.Pow(s, 1.0 / 3.0);
+
+            return new Oklab
+            {
+                L = 0.2104542553 * l_ + 0.7936177850 * m_ - 0.0040720468 * s_,
+                A = 1.9779984951 * l_ - 2.4285922050 * m_ + 0.4505937099 * s_,
+                B = 0.0259040371 * l_ + 0.7827717662 * m_ - 0.8086757660 * s_
+            };
+        }
+
+        private static Oklch RgbToOklch(int r, int g, int b)
+        {
+            var oklab = RgbToOklab(r, g, b);
+            double c = Math.Sqrt(oklab.A * oklab.A + oklab.B * oklab.B);
+            double h = Math.Atan2(oklab.B, oklab.A) * (180.0 / Math.PI);
+            if (h < 0)
+                h += 360;
+
+            return new Oklch
+            {
+                L = oklab.L,
+                C = c,
+                H = h
+            };
         }
 
         private static Hct RgbToHct(int r, int g, int b)
