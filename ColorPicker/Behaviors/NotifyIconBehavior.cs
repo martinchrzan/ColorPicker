@@ -35,7 +35,6 @@ namespace ColorPicker.Behaviors
             _notifyIcon.ContextMenu.MenuItems.Add(new MenuItem("Pick Color", OnPickColorClick) { ShowShortcut = false });
             _notifyIcon.ContextMenu.MenuItems.Add(new MenuItem("Settings", OnSettingsClick) { ShowShortcut = false });
             _notifyIcon.ContextMenu.MenuItems.Add(new MenuItem("Close", onCloseClick) { ShowShortcut = false });
-            _notifyIcon.MouseClick += (s, e) => _settingsWindowHelper.ShowSettings();
         }
         
         private void Current_Exit(object sender, ExitEventArgs e)
